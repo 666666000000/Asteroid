@@ -157,7 +157,7 @@ suppress
 
 
 #复制所选图片保存到d标记的路径
-<alt+j>
+#<alt+j>
 ctrl+c # [0.3]
 sa d\<dt>-<i>.jpg
 n
