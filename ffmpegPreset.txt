@@ -1,0 +1,303 @@
+parallel # false #是否并行转换 true 为是
+   
+0 # InputVideo -c copy OutputVideo 			#转换容器格式
+
+1 # InputImage -y OutputImage 				#图片格式转换
+
+2 # InputVideo -s 1920x1080 -c:a copy OutputVideo   	#视频分辨率改为1920x1080
+3 # InputVideo -s 1280x720 -c:a copy OutputVideo   	#视频分辨率改为1280x720
+4 # InputVideo -vf scale=iw/2:-1 -c:a copy OutputVideo  #视频分辨率改为源视频一半
+5 # InputVideo -s 1280x720 -c:a copy -y OutputVideo -s 640x480 -c:a copy -y OutputVideo -s 320x240 -c:a copy -y OutputVideo  #同时转换成不同分辨率的视频
+
+6 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=shortest" -y OutputAudio 			#音频混流 取最短时长
+7 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=longest" -y OutputAudio  			#音频混流 取最长时长
+8 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=first:dropout_transition=3" -y OutputAudio 	#音频混流 取第一个音频时长，淡出3秒
+
+20 # InputVideo -c:a copy -vn -y OutputAudio 					#分离出音频
+21 # InputVideo -map 0:2 -c:a copy -vn -y OutputAudio 				#分离指定音频
+22 # InputVideo -c:v copy -an -y OutputVideo 					#分离出视频
+23 # InputVideo -c:v copy -an -y OutputVideo -c:a copy -vn -y OutputAudio 	#视频分离成音频和视频
+24 # InputVideo InputAudio -c copy -map 0:v -map 1:a -y OutputVideo 		#新音频替换视频原音频
+25 # InputVideo InputAudio -c copy -y OutputVideo				#合并音频和视频
+
+
+26 # InputVideo InputSubtitle -c copy -y OutputVideo				#添加字幕
+27 # InputVideo InputSubtitle -c copy -c:s mov_text -y OutputVideo		#添加字幕
+28 # InputVideo -an -vn -c:s copy -y OutputSubtitle				#分离出字幕
+
+40 # InputVideo -vf delogo=x=46:y=48:w=225:h=79 -y OutputVideo					#删除视频一个水印
+41 # InputVideo -vf "delogo=x=0:y=0:w=100:h=10,delogo=x=0:y=0:w=100:h=10" -y OutputVideo	#删除视频两个水印
+42 # InputImage -vf delogo=x=231:y=41:w=201:h=68 -y OutputImage					#删除图片水印
+
+
+43 # InputVideo -y OutputImage					#视频转gif
+44 # InputVideo -s 640*480 -y OutputImage			#视频转gif 分辨率改为 640x480
+45 # InputVideo -s 640*480 -r 15 -t 10 -y OutputImage		#视频转gif 分辨率改为 640x480 15fps 时长10秒
+46 # InputVideo -ss 00:00:20 -t 10 -y OutputImage		#视频转gif 从20秒开始 时长10秒
+47 # InputVideo -ss 00:00:20 -to 00:00:50 -y OutputImage	#视频转gif 从20秒开始 50秒结束
+
+	
+60 # InputVideo -r 5 -q:v 2 -f image2 -y OutputImage				#视频转图片序列 每秒5张
+61 # InputVideo -s 1920x1080 -r 5 -q:v 2 -f image2 -y OutputImage		#视频转图片序列 分辨率改为 1920x1080 每秒5张
+62 # InputVideo -ss 00:00:5 -t 10 -r 5 -q:v 2 -f image2 -y OutputImage		#视频转图片序列 从5秒开始 时长10秒 每秒5张
+63 # InputVideo -ss 00:00:20 -to 00:00:50 -r 5 -q:v 2 -f image2 -y OutputImage	#视频转图片序列 从20秒开始 50秒结束 每秒5张
+
+
+64 # -f image2 InputDir -y OutputVideo					#图片序列转视频
+65 # -f image2 -r 30 InputDir -y OutputVideo				#图片序列转视频 帧率30
+66 # -f image2 InputDir -vcodec libx264 -y OutputVideo			#图片序列转视频 libx264编码
+67 # -f image2 InputDir -vcodec libx264 -r 10 -y OutputVideo		#图片序列转视频 libx264编码 帧率10
+
+80 # InputVideo -vf crop=x=0:y=300:w=480:h=525 -c:a copy -y OutputVideo	#裁剪视频
+
+81 # InputVideo -ss 00:00:20 -t 10 -y OutputVideo 			#截取视频 从20秒开始 时长10秒
+82 # InputVideo -ss 00:00:20 -to 00:00:50 -y OutputVideo 		#截取视频 从20秒开始 50秒结束
+
+83 # InputImage -vf format=gray -y OutputImage 				#彩色图片转黑白图片
+
+   # 第一个视频缩小三倍后叠加到第二个视频的右下角， 第一个视频的音频音量调整为0.3， 第二个视频的音频音量调整为0.6 ，视频时长取源视频最短时长 
+84 # InputVideo*2 -filter_complex "[0:v]scale=iw/3:-1[sv];[1:v][sv]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[0:a]volume=0.3[a0];[1:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -y OutputVideo  
+
+   # 第一个视频缩小三倍，抠图后叠加到第二个视频的右下角， 第一个视频的音频音量调整为0.3， 第二个视频的音频音量调整为0.6 ，视频时长取源视频最短时长 
+85 # InputVideo*2 -filter_complex "[0:v]scale=iw/2:-1[sv];[sv]chromakey=0x00d800:0.3:0[ckout];[1:v][ckout]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[0:a]volume=0.3[a0];[1:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -y OutputVideo  
+
+86 # InputVideo InputImage -filter_complex "[1:v]chromakey=0x00ff00:0.02:0.1[ckout];[0:v][ckout]overlay" -y OutputVideo	#图片抠图后叠加到视频
+87 # InputVideo InputImage -filter_complex "[0:v]chromakey=0x00d800:0.25:0[ckout];[1:v][ckout]overlay" -y OutputVideo	#视频抠图后叠加到图片
+88 # InputImage -vf "chromakey=0x00ff00:0.02:0" -y OutputImage		#图片抠图
+
+
+########################################################### 2pass压制 ###########################################################
+
+    # 6000kbps 30fps 不改变分辨率 编码音频 
+a1  # InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -c:a aac -q:a 0 -ab 320k -ar 44100 -ac 2 -pass 2 -f mp4 -y OutputVideo
+
+    # 6000kbps 30fps 不改变分辨率 复制音频
+a2  # InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -bufsize 48000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -c:a copy -pass 2 -f mp4 -y OutputVideo
+
+    # 6000kbps 30fps 调整分辨率 1920x1080 编码音频 
+a3  # InputVideo -c:v libx264 -s 1920x1080 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -s 1920x1080 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -c:a aac -q:a 0 -ab 320k -ar 44100 -ac 2 -pass 2 -f mp4 -y OutputVideo
+
+    # 6000kbps 30fps 调整分辨率 1920x1080 复制音频 
+a4  # InputVideo -c:v libx264 -s 1920x1080 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -s 1920x1080 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -c:a copy -pass 2 -f mp4 -y OutputVideo
+
+
+    # 3000kbps 30fps 不改变分辨率 编码音频 
+a5  # InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -c:a aac -q:a 0 -ab 320k -ar 44100 -ac 2 -pass 2 -f mp4 -y OutputVideo
+
+    # 3000kbps 30fps 不改变分辨率 复制音频
+a6  # InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -c:a copy -pass 2 -f mp4 -y OutputVideo
+
+    # 3000kbps 30fps 调整分辨率 1280x720 编码音频 
+a7  # InputVideo -c:v libx264 -s 1280x720 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -s 1280x720 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -c:a aac -q:a 0 -ab 320k -ar 44100 -ac 2 -pass 2 -f mp4 -y OutputVideo
+
+    # 3000kbps 30fps 调整分辨率 1280x720 复制音频 
+a8  # InputVideo -c:v libx264 -s 1280x720 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -s 1280x720 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -c:a copy -pass 2 -f mp4 -y OutputVideo
+
+########################################################### 2pass压制 ###########################################################
+
+
+########################################################### gif进度条 ###########################################################
+   # 速度=（视频宽度 - 图片宽度）/ 视频时长  
+   # 单个处理
+
+   # 叠加gif
+b0 # InputVideo -ignore_loop 0 InputImage -filter_complex "[0:v][1:v]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo
+
+   # 缩放后叠加					
+b1 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=100:-1[sv];[0:v][sv]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo	
+
+   # 缩放抠图后叠加	
+b2 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=100:-1:-1[sv];[sv]colorkey=0xffffff:0.3:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 裁剪后叠加
+b3 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=32:y=7:w=98:h=68[cv];[0:v][cv]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 裁剪抠图后叠加	
+b4 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=0:y=46:w=260:h=158[cv];[cv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 裁剪缩放抠图后叠加
+b5 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=57:y=93:w=200:h=113[cv];[cv]scale=100:-1[sv];[sv]colorkey=0xffffff:0.3:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 裁剪缩放翻转抠图后叠加
+b6 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=0:y=40:w=300:h=198[cv];[cv]scale=100:-1[sv];[sv]hflip[fv];[fv]colorkey=0xffffff:0.15:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 抠图后叠加
+b7 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]colorkey=0xffffff:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo	
+
+   # 翻转后叠加
+b8 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]hflip[fv];[0:v][fv]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 	
+	
+   # 翻转抠图后叠加
+b9 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]hflip[fv];[fv]colorkey=0xffffff:0.1:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+    # 缩放翻转抠图后叠加
+b10 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=150:-1[sv];[sv]hflip[fv];[fv]colorkey=0xf6f6f6:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo # 		
+
+   # 批量处理
+
+   # 叠加gif
+c0 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[0:v][1:v]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo
+
+   # 缩放后叠加					
+c1 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=150:-1[sv];[0:v][sv]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo
+
+   # 缩放抠图后叠加	
+c2 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=200:200:-1[sv];[sv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 裁剪后叠加
+c3 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=16:y=96:w=15:h=10[cv];[0:v][cv]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 裁剪抠图后叠加	
+c4 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=73:y=38:w=142:h=134[cv];[cv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 裁剪缩放抠图后叠加
+c5 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=93:y=110:w=450:h=468[cv];[cv]scale=200:-1[sv];[sv]colorkey=0x63432b:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 裁剪缩放翻转抠图后叠加
+c6 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=93:y=110:w=450:h=468[cv];[cv]scale=200:-1[sv];[sv]hflip[fv];[fv]colorkey=0x63432b:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+   # 抠图后叠加
+c7 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]colorkey=0x00ff00:0.1:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo	
+
+   # 翻转后叠加
+c8 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]hflip[fv];[0:v][fv]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 				
+
+   # 翻转抠图后叠加
+c9 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]hflip[fv];[fv]colorkey=0xffffff:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo 
+
+    # 缩放翻转抠图后叠加
+c10 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=150:-1[sv];[sv]hflip[fv];[fv]colorkey=0xf6f6f6:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*速度):y=(main_h-overlay_h)" -t 时长 -c:v libx264 -c:a copy -y OutputVideo #
+
+########################################################### gif进度条 ###########################################################
+
+
+c11 # InputVideo -filter_complex "[0:v]pad=w=2*iw[a];[0:v]hflip[right];[a][right]overlay=x=w" -y OutputVideo  #垂直镜像二分屏
+
+
+########################################################### 三分屏 ###########################################################
+   # 单个处理
+d0 # InputVideo InputImage -filter_complex "[0:v]scale=428:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #横屏 三分屏 宽1280 
+d1 # InputVideo InputImage -filter_complex "[0:v]scale=640:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #横屏 三分屏 宽1920
+
+d2 # InputVideo InputImage -filter_complex "[0:v]scale=-1:428[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #竖屏 三分屏 高1280
+d3 # InputVideo InputImage -filter_complex "[0:v]scale=-1:640[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #竖屏 三分屏 高1920
+
+   # 批量处理
+d4 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=428:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #横屏 三分屏 宽1280
+d5 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=640:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #横屏 三分屏 宽1920
+
+d6 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=-1:428[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #竖屏 三分屏 高1280
+d7 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=-1:640[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #竖屏 三分屏 高1920
+
+########################################################### 三分屏 ###########################################################
+
+########################################################### 横屏竖屏互转 ###########################################################
+
+d8  # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=iw:iw*9/16,boxblur=10:5,scale=1920:1080[bg];[b]scale=-1:1080[v];[bg][v]overlay=(W-w)/2:0" -c:v libx264 -c:a copy -y OutputVideo  #竖屏转横屏 1920x1080
+d9  # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=ih*9/16:ih,boxblur=10:5,scale=1080:1920[bg];[b]scale=1080:-1[v];[bg][v]overlay=0:(H-h)/2" -c:v libx264 -c:a copy -y OutputVideo  #横屏转竖屏 1080x1920
+
+d10 # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=iw:iw*9/16,boxblur=10:5,scale=1280:720[bg];[b]scale=-1:720[v];[bg][v]overlay=(W-w)/2:0" -c:v libx264 -c:a copy -y OutputVideo    #竖屏转横屏 1280x720
+d11 # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=ih*9/16:ih,boxblur=10:5,scale=720:1280[bg];[b]scale=720:-1[v];[bg][v]overlay=0:(H-h)/2" -c:v libx264 -c:a copy -y OutputVideo    #横屏转竖屏 720x1280
+
+########################################################### 横屏竖屏互转 ###########################################################
+
+
+###########################################################图片加文本水印###########################################################
+
+e0 # InputImage -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=修改:y=修改:shadowy=2 OutputImage		#自定义水印坐标
+
+e1 # InputImage -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=0:y=0:shadowy=2 OutputImage			#左上角水印
+e2 # InputImage -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=(w-text_w)/2:y=0 OutputImage			#上面中间水印
+e3 # InputImage -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=w-tw:y=0:shadowy=2 OutputImage		#右上角水印
+
+e4 # InputImage -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=(w-text_w)/2:y=(h-text_h)/2 OutputImage	#正中间水印
+
+e5 # InputImage -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=0:y=h-th:shadowy=2 OutputImage		#左下角水印
+e6 # InputImage -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=(w-text_w)/2:y=h-th:shadowy=2 OutputImage	#下面中间水印
+e7 # InputImage -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=w-text_w:y=h-th:shadowy=2 OutputImage	#右下角水印
+
+###########################################################图片加文本水印###########################################################
+
+###########################################################视频加文本水印###########################################################
+
+e8  # InputVideo -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=修改:y=修改:shadowy=2 OutputVideo		#自定义水印坐标
+
+e9  # InputVideo -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=0:y=0:shadowy=2 OutputVideo			#左上角水印
+e10 # InputVideo -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=(w-text_w)/2:y=0 OutputVideo		#上面中间水印
+e11 # InputVideo -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=w-tw:y=0:shadowy=2 OutputVideo		#右上角水印
+
+e12 # InputVideo -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=(w-text_w)/2:y=(h-text_h)/2 OutputVideo	#正中间水印
+
+e13 # InputVideo -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=0:y=h-th:shadowy=2 OutputVideo		#左下角水印
+e14 # InputVideo -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=(w-text_w)/2:y=h-th:shadowy=2 OutputVideo	#下面中间水印
+e15 # InputVideo -vf drawtext=fontcolor=white:fontfile=微软雅黑:fontsize=50:text='老板再来两碗饭':x=w-text_w:y=h-th:shadowy=2 OutputVideo	#右下角水印
+
+###########################################################视频加文本水印###########################################################
+
+
+###########################################################图片加图片水印###########################################################
+
+f0 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=修改:y=修改" -y OutputImage						#自定义水印坐标
+
+f1 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=0:y=0" -y OutputImage						#左上角水印
+f2 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:y=0" -y OutputImage				#上面中间水印
+f3 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w):y=0" -y OutputImage				#右上角水印
+
+f4 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2" -y OutputImage		#正中间水印
+
+f5 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=0:y=(main_h-overlay_h)" -y OutputImage				#左下角水印
+f6 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:(main_h-overlay_h)" -y OutputImage		#下面中间水印
+f7 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w):y=(main_h-overlay_h)" -y OutputImage		#右下角水印
+
+###########################################################图片加图片水印###########################################################
+
+
+###########################################################视频加图片水印###########################################################
+
+f8  # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=修改:y=修改" -y OutputVideo						#自定义水印坐标
+
+f9  # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=0:y=0" -y OutputVideo						#左上角水印
+f10 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:y=0" -y OutputVideo				#上面中间水印
+f11 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w):y=0" -y OutputVideo				#右上角水印
+
+f12 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2" -y OutputVideo		#正中间水印
+
+f13 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=0:y=(main_h-overlay_h)" -y OutputVideo				#左下角水印
+f14 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:(main_h-overlay_h)" -y OutputVideo		#下面中间水印
+f15 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w):y=(main_h-overlay_h)" -y OutputVideo		#右下角水印
+
+###########################################################视频加图片水印###########################################################
+
+
+
+g0 # -thread_queue_size 1000 -f gdigrab -s 655x370 -offset_x 59 -offset_y 276 -r 15 -i desktop -vcodec libx264 -y OutputVideo	#保存屏幕区域成视频
+g1 # -thread_queue_size 1000 -f gdigrab -s 544x548 -offset_x 90 -offset_y 178 -r 15 -i desktop -y OutputImage			#保存屏幕区域成gif
+
+
+g2 # InputURL -c copy -y OutputVideo 				#保存网络视频流
+g3 # -re InputVideo -acodec aac -ar 32000 -vcodec copy -f flv OutputURL				#视频推流
+g4 # -re InputVideo -acodec aac -ar 32000 -vcodec copy -f flv rtmp://127.0.0.1:1935/live 	#视频推流
+
+
+   # 录制摄像头和麦克风声音
+g5 # -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="麦克风 (Realtek High Definition Audio)" -vcodec libx264 -s 1280x720 -r 25 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -y OutputVideo	
+
+   # 录制桌面和系统声音
+g6 # -thread_queue_size 1000 -f gdigrab -i desktop -f dshow -i audio="立体声混音 (Realtek High Definition Audio)" -vcodec libx264 -s 1920x1080 -r 25 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -y OutputVideo	
+
+
+   # 录制摄像头和麦克风到一个视频 录制桌面和系统声音到另一个视频
+g7 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="麦克风 (Realtek High Definition Audio)" -vcodec libx264 -s 1920x1080  -r 20 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -map 0 -map 1 -y OutputVideo -thread_queue_size 1000 -f gdigrab -i desktop -f dshow -i audio="立体声混音 (Realtek High Definition Audio)" -vcodec libx264 -b:v 6000k -s 1920x1080 -r 20 -acodec aac -b:a 320k -ar 44100 -ac 2  -map 2 -map 3 -y OutputVideo	
+
+
+   # 录制摄像头缩小3倍后叠加到桌面视频的右下角，调整录制麦克风音量为0.3，系统音量为0.6 保存到本地
+g8 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="麦克风 (Realtek High Definition Audio)" -thread_queue_size 1000 -s 1920x1080 -r 20 -f gdigrab -i desktop -f dshow -i audio="立体声混音 (Realtek High Definition Audio)" -filter_complex "[0:v]scale=iw/3:-1[sv];[2:v][sv]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[1:a]volume=0.3[a0];[3:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -vcodec libx264 -b:v 5000k -acodec aac -b:a 128k -ar 44100 -ac 2 -y OutputVideo 
+
+
+   # 录制摄像头缩小3倍后叠加到桌面视频的右下角，调整录制麦克风音量为0.3，系统音量为0.6 rtmp推流
+g9 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="麦克风 (Realtek High Definition Audio)" -thread_queue_size 1000 -s 1920x1080 -r 20 -f gdigrab -i desktop -f dshow -i audio="立体声混音 (Realtek High Definition Audio)" -filter_complex "[0:v]scale=iw/3:-1[sv];[2:v][sv]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[1:a]volume=0.3[a0];[3:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -vcodec libx264 -b:v 5000k -acodec aac -b:a 128k -ar 44100 -ac 2 -f flv rtmp://127.0.0.1:1935/live
+
+
+
+
+

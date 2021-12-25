@@ -1,0 +1,77 @@
+<c>
+con 192.168.0.138 22 server InputArg
+
+<d>
+dis
+
+<up>
+put * /tmp
+
+<ls>
+ls /var
+ls /home/server/Program/InputArg
+
+<dl>
+get * d
+
+<cu>
+con 192.168.0.138 22 server InputArg
+put * /tmp
+sh /tmp/ls.sh
+dis
+
+<yum>
+yum -y install InputArg
+yum groupinstall "InputArg"
+yum update InputArg
+yum groupupdate "InputArg"
+yum info InputArg
+yum groupinfo "InputArg"
+yum remove InputArg
+yum groupremove "InputArg"
+yum clean all
+yum repolist
+yum lits InputArg
+yum lits all
+yum reinstall InputArg
+
+<c7>
+systemctl status httpd.service
+systemctl start httpd.service
+systemctl restart httpd.service
+systemctl stop httpd.service
+systemctl enable httpd.service
+systemctl disable httpd.service
+systemctl status firewalld  
+systemctl start firewalld 
+systemctl restart firewalld 
+systemctl stop firewalld 
+systemctl enable firewalld
+systemctl disable firewalld
+firewall-cmd --list-all
+
+<c6>
+service iptables status
+service iptables start
+service iptables restart
+service iptables stop
+service iptables save
+iptables -A INPUT -p tcp -dport InputArg -j ACCEPT
+
+<apt>
+apt-get update
+apt-get upgrade
+apt-get install InputArg
+apt-get install InputArg --only-upgrade
+apt-get install InputArg --reinstall
+apt-cache search InputArg
+apt-cache show InputArg
+apt-cache depends InputArg
+apt-cache rdepends InputArg
+apt-get remove InputArg
+apt-get remove InputArg --purge
+apt-get autoremove InputArg --purge
+apt-get clean
+apt-get autoclean
+apt-get check
+

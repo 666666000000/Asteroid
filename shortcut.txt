@@ -1,0 +1,223 @@
+# <快捷键>
+# 要发送的快捷键
+# 要执行的命令，多个命令用双分号隔开
+# 执行命令时所用的模式
+# run 只执行命令，runs 执行命令并召出输入框，其它为填充到输入框
+# local 为局部快捷键，其它为全局快捷键
+# suppress 压制按键事件，其它为不压制，用在全局快捷键
+
+
+# 以下是局部快捷键
+
+#VLC播放
+#<Control-F1>
+None
+play
+vlc 
+run
+local
+
+
+#VLC暂停
+#<Control-F2>
+None
+pause
+vlc
+run
+local
+
+
+#VLC停止
+#<Control-F3>
+None
+stop
+vlc
+run
+local
+
+
+#VLC前一首
+#<Control-F4>
+None
+p
+vlc
+run
+local
+
+
+#VLC下一首
+#<Control-F5>
+None
+n
+vlc
+run
+local
+
+
+#VLC全屏
+#<Control-F6>
+None
+fs
+vlc
+run
+local
+
+
+#启动VLC
+#<Control-F11>
+None
+vlc ;; on
+n
+run
+local
+
+
+#关闭VLC
+#<Control-F12>
+None
+off
+vlc
+run
+local
+
+
+#ffmpeg命令，填入输入框，不执行
+#<Control-f>
+None
+ff i * d\
+n
+noRun
+local
+
+#截屏
+#<Control-d>
+None
+sa d\<i>.jpg s
+n
+run
+local
+
+#打开命令行
+#<Control-z>
+None
+ca
+n
+run
+local
+
+
+# 以下是全局快捷键
+
+#召出输入框
+<alt+space>
+None
+None
+n
+noRun
+global
+suppress
+
+
+#复制所选内容并召出输入框
+<alt+c>
+ctrl+c # [0.1]
+None
+n
+noRun
+global
+suppress
+
+#截屏
+<alt+v>
+None
+ps
+n
+run
+global
+suppress
+
+#复制当前文件夹路径
+<alt+b>
+alt+d # [0.3] # ctrl+c # [0.1]
+printClip
+n
+runs
+global
+suppress
+
+
+#复制所选文件路径
+<alt+n>
+alt+3 # [0.3]
+printClip
+n
+runs
+global
+suppress
+
+
+#复制所选图片保存到d标记的路径
+<alt+j>
+ctrl+c # [0.3]
+sa d\<dt>-<i>.jpg
+n
+run
+global
+suppress
+
+
+#复制所选文本保存到d标记的路径
+#<alt+t>
+ctrl+c # [0.3]
+sa d\<i>.txt
+n
+run
+global
+suppress
+
+
+#手动截屏并按日期加序号的名字保存到d标记的路径
+#<alt+g>
+None
+ps d\<dt>-<i>.jpg 
+n
+run
+global
+suppress
+
+
+#自动截屏并按日期加序号的名字保存到d标记的路径
+#<alt+h>
+None
+sa d\<dt>-<i>.jpg s
+n
+run
+global
+suppress
+
+
+#使用win+space打开资源管理器
+#<win+space>
+None
+explorer
+n
+run
+global
+suppress
+
+
+#空格控制vlc播放暂停的同时也可以被其它软件响应
+#<space>
+None
+pause
+vlc
+run
+global
+unsuppress
+
+
+
+
+
+
+

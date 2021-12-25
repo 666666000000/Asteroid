@@ -1,0 +1,11 @@
+bd https://www.baidu.com
+zh https://www.zhihu.com
+wb https://weibo.com
+mw https://m.weibo.cn
+sw https://s.weibo.com
+bi https://www.bilibili.com
+tb https://www.taobao.com
+jd https://www.jd.com
+git https://github.com
+wx https://wx.qq.com
+qm https://mail.qq.com
