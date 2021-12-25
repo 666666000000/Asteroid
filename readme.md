@@ -104,8 +104,8 @@
 合并pdf</br>
 
 `pillowImage`
-{'rs', 'ro', 'crop', 'gray', 'wm', 'cut9'}</br>
-图片批量缩放、旋转、裁剪、转灰度、加水印、九宫格</br>
+{'rs', 'ro', 'crop', 'gray', 'wm', 'cut'}</br>
+图片批量缩放、旋转、裁剪、转灰度、加水印、裁切</br>
 
 `printScreen`</br>
 {'ps', 'pc', 'gs'}</br>
