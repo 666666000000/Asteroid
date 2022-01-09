@@ -100,7 +100,7 @@
 
 `wocr`</br>
 {'wocr'}</br>
-从剪贴板、图片、桌面识别文字</br>
+从剪贴板、图片、桌面识别文字（网络版）</br>
 
 `opencvImage`</br>
 {'cmap', 'den', 'sa'}</br>
