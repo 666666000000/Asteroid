@@ -272,20 +272,24 @@ def cutName(name,arg):
 		else:
 			name = name[:start]
 	else:
-		t =arg.split(":")
+		t = arg.split(":")
 		name = name[int(t[0]):int(t[1])]
 	return name
 
+def insertName(name,arg):
+	if arg.find(":") == -1:
+		return name + arg
+	else:
+		tmp = arg.split(":")
+		pos = int(tmp[0])
+		return name[0:pos] + tmp[1] + name[pos:]
+
 def replaceName(name,arg):
-	tmp = arg.split("|")
-	if len(tmp) != 2:
-		print(f"参数错误:{arg}")
-		return -1
-	if tmp[1].find("<") != -1:
-		tmp[1] = core.replaceFileName(tmp[1])
-	name = re.sub(tmp[0], tmp[1], name)
-	#name = name.replace(tmp[0],tmp[1])
-	return name
+	if arg.find(":") == -1:
+		return arg
+	else:
+		tmp = arg.split(":")
+		return re.sub(tmp[0], tmp[1], name)
 
 def renameFile(arg,argLen):
 	if argLen < 2:
@@ -299,22 +303,20 @@ def renameFile(arg,argLen):
 			dstPath = filepath + "\\" + "".join(random.sample(string.ascii_letters + string.digits,length)) + suffix
 		else:
 			for i in range(1,argLen):
-				if arg[i].startswith("["):
-					name = cutName(name,arg[i][1:-1])
-				elif arg[i].find("|") != -1:
-					name = replaceName(name,arg[i])
-					if name == -1:
-						return
-				elif arg[i].find("<") != -1:
-					t = core.replaceFileName(arg[i])
-					if arg[i].startswith(":"):
-						name = name + t[1:]
-					else:
-						name = t[:-1] + name
-				elif arg[i]=="l":
+				if arg[i]=="l":
 					name = name.lower()
 				elif arg[i]=="u":
-					name = name.upper()
+			 		name = name.upper()
+				elif arg[i].startswith("."):
+					suffix = arg[i]
+				elif arg[i].startswith("c:"):
+					name = cutName(name,arg[i][2:])
+				elif arg[i].startswith("i:"):
+					name = insertName(name,arg[i][2:])
+				elif arg[i].startswith("r:"):
+					name = replaceName(name,arg[i][2:])
+			if name.find("<") != -1:
+				name = core.replaceFileName(name)
 			dstPath = f"{filepath}\\{name}{suffix}"
 		print(f"源路径: {srcPath}")
 		print(f"目标路径: {dstPath}")
