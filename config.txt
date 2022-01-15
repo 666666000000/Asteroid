@@ -7,6 +7,9 @@ localhost 8899 123456
 <rpc>
 http://localhost:6800/jsonrpc 88888888
 
+<webocr>
+tcp://127.0.0.1:6900
+
 #软件在启动时会加载autoload下的模块，autoload下没有模块名时会加载所有模块
 <autoload>
 core
