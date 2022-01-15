@@ -56,6 +56,39 @@
 `dp` 设置下载路径</br>
 `gd` 从字典复制路径到剪贴板</br>
 
+### dav.bat
+以dav方式上传文件会调用这个脚本</br>
+
+### ftp.bat
+以ftp方式上传文件会调用这个脚本</br>
+
+### sync.bat
+镜像同步时调用这个脚本</br>
+
+### config.txt
+保存一些设置</br>
+
+### downloadPreset.txt
+预设的命令行下载命令</br>
+
+### ffmpegPreset.txt
+预设的ffmpeg命令</br>
+
+### sshPreset.txt
+预设的ssh命令</br>
+
+### pathDict.txt
+保存常用路径</br>
+
+### search.txt
+用短名称搜索的网址</br>
+
+### web.txt
+用短名称打开的网址</br>
+
+### history.txt
+保存命令记录</br>
+
 ### 模块及功能
 
 
