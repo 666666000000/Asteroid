@@ -98,9 +98,16 @@
 #### 命令
 `sc` 场景切割</br>
 `mv` 合并视频</br>
-`ff` 按ffmpegPerset里预设的命令批量处理视频，有两种命令格式</br>
+`ff` 按`ffmpegPerset.txt`里预设的命令批量处理视频，有两种命令格式</br>
 1. `ff id src dst`</br>
 2. `ff id src @loop dst` 第四个参数表输入的文件要循环使用，以`@`开头，如水印文件</br>
+   
+选中的源文件会按文件类型分类后依次填充进命令，一条命令所需要的源文件填充完后，剩下的源文件会循环填充同一条命令，最后依次执行所有命令，将`ffmpegPerset.txt`第一行parallel后面的`false`改为`true` 会并行运行所有命令</br>
+`InputImage`填充一张图片路径</br>
+`InputImage*0`填充所有图片路径</br>
+`InputImage*2`填充两图片路径</br>
+`InputImage*-1`循环填充一张源图片路径</br>
+
 
 
 ### download
