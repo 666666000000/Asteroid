@@ -1,301 +1,301 @@
-parallel # false #ÊÇ·ñ²¢ĞĞ×ª»» true ÎªÊÇ
+parallel # false #æ˜¯å¦å¹¶è¡Œè½¬æ¢ true ä¸ºæ˜¯
    
-0 # InputVideo -c copy OutputVideo 			#×ª»»ÈİÆ÷¸ñÊ½
+0 # InputVideo -c copy OutputVideo 			#è½¬æ¢å®¹å™¨æ ¼å¼
 
-1 # InputImage -y OutputImage 				#Í¼Æ¬¸ñÊ½×ª»»
+1 # InputImage -y OutputImage 				#å›¾ç‰‡æ ¼å¼è½¬æ¢
 
-2 # InputVideo -s 1920x1080 -c:a copy OutputVideo   	#ÊÓÆµ·Ö±æÂÊ¸ÄÎª1920x1080
-3 # InputVideo -s 1280x720 -c:a copy OutputVideo   	#ÊÓÆµ·Ö±æÂÊ¸ÄÎª1280x720
-4 # InputVideo -vf scale=iw/2:-1 -c:a copy OutputVideo  #ÊÓÆµ·Ö±æÂÊ¸ÄÎªÔ´ÊÓÆµÒ»°ë
-5 # InputVideo -s 1280x720 -c:a copy -y OutputVideo -s 640x480 -c:a copy -y OutputVideo -s 320x240 -c:a copy -y OutputVideo  #Í¬Ê±×ª»»³É²»Í¬·Ö±æÂÊµÄÊÓÆµ
+2 # InputVideo -s 1920x1080 -c:a copy OutputVideo   	#è§†é¢‘åˆ†è¾¨ç‡æ”¹ä¸º1920x1080
+3 # InputVideo -s 1280x720 -c:a copy OutputVideo   	#è§†é¢‘åˆ†è¾¨ç‡æ”¹ä¸º1280x720
+4 # InputVideo -vf scale=iw/2:-1 -c:a copy OutputVideo  #è§†é¢‘åˆ†è¾¨ç‡æ”¹ä¸ºæºè§†é¢‘ä¸€åŠ
+5 # InputVideo -s 1280x720 -c:a copy -y OutputVideo -s 640x480 -c:a copy -y OutputVideo -s 320x240 -c:a copy -y OutputVideo  #åŒæ—¶è½¬æ¢æˆä¸åŒåˆ†è¾¨ç‡çš„è§†é¢‘
 
-6 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=shortest" -y OutputAudio 			#ÒôÆµ»ìÁ÷ È¡×î¶ÌÊ±³¤
-7 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=longest" -y OutputAudio  			#ÒôÆµ»ìÁ÷ È¡×î³¤Ê±³¤
-8 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=first:dropout_transition=3" -y OutputAudio 	#ÒôÆµ»ìÁ÷ È¡µÚÒ»¸öÒôÆµÊ±³¤£¬µ­³ö3Ãë
+6 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=shortest" -y OutputAudio 			#éŸ³é¢‘æ··æµ å–æœ€çŸ­æ—¶é•¿
+7 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=longest" -y OutputAudio  			#éŸ³é¢‘æ··æµ å–æœ€é•¿æ—¶é•¿
+8 #  InputAudio*2 -filter_complex "amix=inputs=2:duration=first:dropout_transition=3" -y OutputAudio 	#éŸ³é¢‘æ··æµ å–ç¬¬ä¸€ä¸ªéŸ³é¢‘æ—¶é•¿ï¼Œæ·¡å‡º3ç§’
 
-20 # InputVideo -c:a copy -vn -y OutputAudio 					#·ÖÀë³öÒôÆµ
-21 # InputVideo -map 0:2 -c:a copy -vn -y OutputAudio 				#·ÖÀëÖ¸¶¨ÒôÆµ
-22 # InputVideo -c:v copy -an -y OutputVideo 					#·ÖÀë³öÊÓÆµ
-23 # InputVideo -c:v copy -an -y OutputVideo -c:a copy -vn -y OutputAudio 	#ÊÓÆµ·ÖÀë³ÉÒôÆµºÍÊÓÆµ
-24 # InputVideo InputAudio -c copy -map 0:v -map 1:a -y OutputVideo 		#ĞÂÒôÆµÌæ»»ÊÓÆµÔ­ÒôÆµ
-25 # InputVideo InputAudio -c copy -y OutputVideo				#ºÏ²¢ÒôÆµºÍÊÓÆµ
-
-
-26 # InputVideo InputSubtitle -c copy -y OutputVideo				#Ìí¼Ó×ÖÄ»
-27 # InputVideo InputSubtitle -c copy -c:s mov_text -y OutputVideo		#Ìí¼Ó×ÖÄ»
-28 # InputVideo -an -vn -c:s copy -y OutputSubtitle				#·ÖÀë³ö×ÖÄ»
-
-40 # InputVideo -vf delogo=x=46:y=48:w=225:h=79 -y OutputVideo					#É¾³ıÊÓÆµÒ»¸öË®Ó¡
-41 # InputVideo -vf "delogo=x=0:y=0:w=100:h=10,delogo=x=0:y=0:w=100:h=10" -y OutputVideo	#É¾³ıÊÓÆµÁ½¸öË®Ó¡
-42 # InputImage -vf delogo=x=231:y=41:w=201:h=68 -y OutputImage					#É¾³ıÍ¼Æ¬Ë®Ó¡
+20 # InputVideo -c:a copy -vn -y OutputAudio 					#åˆ†ç¦»å‡ºéŸ³é¢‘
+21 # InputVideo -map 0:2 -c:a copy -vn -y OutputAudio 				#åˆ†ç¦»æŒ‡å®šéŸ³é¢‘
+22 # InputVideo -c:v copy -an -y OutputVideo 					#åˆ†ç¦»å‡ºè§†é¢‘
+23 # InputVideo -c:v copy -an -y OutputVideo -c:a copy -vn -y OutputAudio 	#è§†é¢‘åˆ†ç¦»æˆéŸ³é¢‘å’Œè§†é¢‘
+24 # InputVideo InputAudio -c copy -map 0:v -map 1:a -y OutputVideo 		#æ–°éŸ³é¢‘æ›¿æ¢è§†é¢‘åŸéŸ³é¢‘
+25 # InputVideo InputAudio -c copy -y OutputVideo				#åˆå¹¶éŸ³é¢‘å’Œè§†é¢‘
 
 
-43 # InputVideo -y OutputImage					#ÊÓÆµ×ªgif
-44 # InputVideo -s 640*480 -y OutputImage			#ÊÓÆµ×ªgif ·Ö±æÂÊ¸ÄÎª 640x480
-45 # InputVideo -s 640*480 -r 15 -t 10 -y OutputImage		#ÊÓÆµ×ªgif ·Ö±æÂÊ¸ÄÎª 640x480 15fps Ê±³¤10Ãë
-46 # InputVideo -ss 00:00:20 -t 10 -y OutputImage		#ÊÓÆµ×ªgif ´Ó20Ãë¿ªÊ¼ Ê±³¤10Ãë
-47 # InputVideo -ss 00:00:20 -to 00:00:50 -y OutputImage	#ÊÓÆµ×ªgif ´Ó20Ãë¿ªÊ¼ 50Ãë½áÊø
+26 # InputVideo InputSubtitle -c copy -y OutputVideo				#æ·»åŠ å­—å¹•
+27 # InputVideo InputSubtitle -c copy -c:s mov_text -y OutputVideo		#æ·»åŠ å­—å¹•
+28 # InputVideo -an -vn -c:s copy -y OutputSubtitle				#åˆ†ç¦»å‡ºå­—å¹•
+
+40 # InputVideo -vf delogo=x=46:y=48:w=225:h=79 -y OutputVideo					#åˆ é™¤è§†é¢‘ä¸€ä¸ªæ°´å°
+41 # InputVideo -vf "delogo=x=0:y=0:w=100:h=10,delogo=x=0:y=0:w=100:h=10" -y OutputVideo	#åˆ é™¤è§†é¢‘ä¸¤ä¸ªæ°´å°
+42 # InputImage -vf delogo=x=231:y=41:w=201:h=68 -y OutputImage					#åˆ é™¤å›¾ç‰‡æ°´å°
+
+
+43 # InputVideo -y OutputImage					#è§†é¢‘è½¬gif
+44 # InputVideo -s 640*480 -y OutputImage			#è§†é¢‘è½¬gif åˆ†è¾¨ç‡æ”¹ä¸º 640x480
+45 # InputVideo -s 640*480 -r 15 -t 10 -y OutputImage		#è§†é¢‘è½¬gif åˆ†è¾¨ç‡æ”¹ä¸º 640x480 15fps æ—¶é•¿10ç§’
+46 # InputVideo -ss 00:00:20 -t 10 -y OutputImage		#è§†é¢‘è½¬gif ä»20ç§’å¼€å§‹ æ—¶é•¿10ç§’
+47 # InputVideo -ss 00:00:20 -to 00:00:50 -y OutputImage	#è§†é¢‘è½¬gif ä»20ç§’å¼€å§‹ 50ç§’ç»“æŸ
 
 	
-60 # InputVideo -r 5 -q:v 2 -f image2 -y OutputImage				#ÊÓÆµ×ªÍ¼Æ¬ĞòÁĞ Ã¿Ãë5ÕÅ
-61 # InputVideo -s 1920x1080 -r 5 -q:v 2 -f image2 -y OutputImage		#ÊÓÆµ×ªÍ¼Æ¬ĞòÁĞ ·Ö±æÂÊ¸ÄÎª 1920x1080 Ã¿Ãë5ÕÅ
-62 # InputVideo -ss 00:00:5 -t 10 -r 5 -q:v 2 -f image2 -y OutputImage		#ÊÓÆµ×ªÍ¼Æ¬ĞòÁĞ ´Ó5Ãë¿ªÊ¼ Ê±³¤10Ãë Ã¿Ãë5ÕÅ
-63 # InputVideo -ss 00:00:20 -to 00:00:50 -r 5 -q:v 2 -f image2 -y OutputImage	#ÊÓÆµ×ªÍ¼Æ¬ĞòÁĞ ´Ó20Ãë¿ªÊ¼ 50Ãë½áÊø Ã¿Ãë5ÕÅ
+60 # InputVideo -r 5 -q:v 2 -f image2 -y OutputImage				#è§†é¢‘è½¬å›¾ç‰‡åºåˆ— æ¯ç§’5å¼ 
+61 # InputVideo -s 1920x1080 -r 5 -q:v 2 -f image2 -y OutputImage		#è§†é¢‘è½¬å›¾ç‰‡åºåˆ— åˆ†è¾¨ç‡æ”¹ä¸º 1920x1080 æ¯ç§’5å¼ 
+62 # InputVideo -ss 00:00:5 -t 10 -r 5 -q:v 2 -f image2 -y OutputImage		#è§†é¢‘è½¬å›¾ç‰‡åºåˆ— ä»5ç§’å¼€å§‹ æ—¶é•¿10ç§’ æ¯ç§’5å¼ 
+63 # InputVideo -ss 00:00:20 -to 00:00:50 -r 5 -q:v 2 -f image2 -y OutputImage	#è§†é¢‘è½¬å›¾ç‰‡åºåˆ— ä»20ç§’å¼€å§‹ 50ç§’ç»“æŸ æ¯ç§’5å¼ 
 
 
-64 # -f image2 InputDir -y OutputVideo					#Í¼Æ¬ĞòÁĞ×ªÊÓÆµ
-65 # -f image2 -r 30 InputDir -y OutputVideo				#Í¼Æ¬ĞòÁĞ×ªÊÓÆµ Ö¡ÂÊ30
-66 # -f image2 InputDir -vcodec libx264 -y OutputVideo			#Í¼Æ¬ĞòÁĞ×ªÊÓÆµ libx264±àÂë
-67 # -f image2 InputDir -vcodec libx264 -r 10 -y OutputVideo		#Í¼Æ¬ĞòÁĞ×ªÊÓÆµ libx264±àÂë Ö¡ÂÊ10
+64 # -f image2 InputDir -y OutputVideo					#å›¾ç‰‡åºåˆ—è½¬è§†é¢‘
+65 # -r 30 -f image2 InputDir -y OutputVideo				#å›¾ç‰‡åºåˆ—è½¬è§†é¢‘ å¸§ç‡30
+66 # -f image2 InputDir -vcodec libx264 -y OutputVideo			#å›¾ç‰‡åºåˆ—è½¬è§†é¢‘ libx264ç¼–ç 
+67 # -r 10 -f image2 InputDir -vcodec libx264 -y OutputVideo		#å›¾ç‰‡åºåˆ—è½¬è§†é¢‘ libx264ç¼–ç  å¸§ç‡10
 
-80 # InputVideo -vf crop=x=0:y=300:w=480:h=525 -c:a copy -y OutputVideo	#²Ã¼ôÊÓÆµ
+80 # InputVideo -vf crop=x=0:y=300:w=480:h=525 -c:a copy -y OutputVideo	#è£å‰ªè§†é¢‘
 
-81 # InputVideo -ss 00:00:20 -t 10 -y OutputVideo 			#½ØÈ¡ÊÓÆµ ´Ó20Ãë¿ªÊ¼ Ê±³¤10Ãë
-82 # InputVideo -ss 00:00:20 -to 00:00:50 -y OutputVideo 		#½ØÈ¡ÊÓÆµ ´Ó20Ãë¿ªÊ¼ 50Ãë½áÊø
+81 # InputVideo -ss 00:00:20 -t 10 -y OutputVideo 			#æˆªå–è§†é¢‘ ä»20ç§’å¼€å§‹ æ—¶é•¿10ç§’
+82 # InputVideo -ss 00:00:20 -to 00:00:50 -y OutputVideo 		#æˆªå–è§†é¢‘ ä»20ç§’å¼€å§‹ 50ç§’ç»“æŸ
 
-83 # InputImage -vf format=gray -y OutputImage 				#²ÊÉ«Í¼Æ¬×ªºÚ°×Í¼Æ¬
+83 # InputImage -vf format=gray -y OutputImage 				#å½©è‰²å›¾ç‰‡è½¬é»‘ç™½å›¾ç‰‡
 
-   # µÚÒ»¸öÊÓÆµËõĞ¡Èı±¶ºóµş¼Óµ½µÚ¶ş¸öÊÓÆµµÄÓÒÏÂ½Ç£¬ µÚÒ»¸öÊÓÆµµÄÒôÆµÒôÁ¿µ÷ÕûÎª0.3£¬ µÚ¶ş¸öÊÓÆµµÄÒôÆµÒôÁ¿µ÷ÕûÎª0.6 £¬ÊÓÆµÊ±³¤È¡Ô´ÊÓÆµ×î¶ÌÊ±³¤ 
+   # ç¬¬ä¸€ä¸ªè§†é¢‘ç¼©å°ä¸‰å€åå åŠ åˆ°ç¬¬äºŒä¸ªè§†é¢‘çš„å³ä¸‹è§’ï¼Œ ç¬¬ä¸€ä¸ªè§†é¢‘çš„éŸ³é¢‘éŸ³é‡è°ƒæ•´ä¸º0.3ï¼Œ ç¬¬äºŒä¸ªè§†é¢‘çš„éŸ³é¢‘éŸ³é‡è°ƒæ•´ä¸º0.6 ï¼Œè§†é¢‘æ—¶é•¿å–æºè§†é¢‘æœ€çŸ­æ—¶é•¿ 
 84 # InputVideo*2 -filter_complex "[0:v]scale=iw/3:-1[sv];[1:v][sv]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[0:a]volume=0.3[a0];[1:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -y OutputVideo  
 
-   # µÚÒ»¸öÊÓÆµËõĞ¡Èı±¶£¬¿ÙÍ¼ºóµş¼Óµ½µÚ¶ş¸öÊÓÆµµÄÓÒÏÂ½Ç£¬ µÚÒ»¸öÊÓÆµµÄÒôÆµÒôÁ¿µ÷ÕûÎª0.3£¬ µÚ¶ş¸öÊÓÆµµÄÒôÆµÒôÁ¿µ÷ÕûÎª0.6 £¬ÊÓÆµÊ±³¤È¡Ô´ÊÓÆµ×î¶ÌÊ±³¤ 
+   # ç¬¬ä¸€ä¸ªè§†é¢‘ç¼©å°ä¸‰å€ï¼ŒæŠ å›¾åå åŠ åˆ°ç¬¬äºŒä¸ªè§†é¢‘çš„å³ä¸‹è§’ï¼Œ ç¬¬ä¸€ä¸ªè§†é¢‘çš„éŸ³é¢‘éŸ³é‡è°ƒæ•´ä¸º0.3ï¼Œ ç¬¬äºŒä¸ªè§†é¢‘çš„éŸ³é¢‘éŸ³é‡è°ƒæ•´ä¸º0.6 ï¼Œè§†é¢‘æ—¶é•¿å–æºè§†é¢‘æœ€çŸ­æ—¶é•¿ 
 85 # InputVideo*2 -filter_complex "[0:v]scale=iw/2:-1[sv];[sv]chromakey=0x00d800:0.3:0[ckout];[1:v][ckout]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[0:a]volume=0.3[a0];[1:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -y OutputVideo  
 
-86 # InputVideo InputImage -filter_complex "[1:v]chromakey=0x00ff00:0.02:0.1[ckout];[0:v][ckout]overlay" -y OutputVideo	#Í¼Æ¬¿ÙÍ¼ºóµş¼Óµ½ÊÓÆµ
-87 # InputVideo InputImage -filter_complex "[0:v]chromakey=0x00d800:0.25:0[ckout];[1:v][ckout]overlay" -y OutputVideo	#ÊÓÆµ¿ÙÍ¼ºóµş¼Óµ½Í¼Æ¬
-88 # InputImage -vf "chromakey=0x00ff00:0.02:0" -y OutputImage		#Í¼Æ¬¿ÙÍ¼
+86 # InputVideo InputImage -filter_complex "[1:v]chromakey=0x00ff00:0.02:0.1[ckout];[0:v][ckout]overlay" -y OutputVideo	#å›¾ç‰‡æŠ å›¾åå åŠ åˆ°è§†é¢‘
+87 # InputVideo InputImage -filter_complex "[0:v]chromakey=0x00d800:0.25:0[ckout];[1:v][ckout]overlay" -y OutputVideo	#è§†é¢‘æŠ å›¾åå åŠ åˆ°å›¾ç‰‡
+88 # InputImage -vf "chromakey=0x00ff00:0.02:0" -y OutputImage		#å›¾ç‰‡æŠ å›¾
 
 
-########################################################### 2passÑ¹ÖÆ ###########################################################
+########################################################### 2passå‹åˆ¶ ###########################################################
 
-    # 6000kbps 30fps ²»¸Ä±ä·Ö±æÂÊ ±àÂëÒôÆµ 
+    # 6000kbps 30fps ä¸æ”¹å˜åˆ†è¾¨ç‡ ç¼–ç éŸ³é¢‘ 
 a1  # InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -c:a aac -q:a 0 -ab 320k -ar 44100 -ac 2 -pass 2 -f mp4 -y OutputVideo
 
-    # 6000kbps 30fps ²»¸Ä±ä·Ö±æÂÊ ¸´ÖÆÒôÆµ
+    # 6000kbps 30fps ä¸æ”¹å˜åˆ†è¾¨ç‡ å¤åˆ¶éŸ³é¢‘
 a2  # InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -bufsize 48000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -c:a copy -pass 2 -f mp4 -y OutputVideo
 
-    # 6000kbps 30fps µ÷Õû·Ö±æÂÊ 1920x1080 ±àÂëÒôÆµ 
+    # 6000kbps 30fps è°ƒæ•´åˆ†è¾¨ç‡ 1920x1080 ç¼–ç éŸ³é¢‘ 
 a3  # InputVideo -c:v libx264 -s 1920x1080 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -s 1920x1080 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -c:a aac -q:a 0 -ab 320k -ar 44100 -ac 2 -pass 2 -f mp4 -y OutputVideo
 
-    # 6000kbps 30fps µ÷Õû·Ö±æÂÊ 1920x1080 ¸´ÖÆÒôÆµ 
+    # 6000kbps 30fps è°ƒæ•´åˆ†è¾¨ç‡ 1920x1080 å¤åˆ¶éŸ³é¢‘ 
 a4  # InputVideo -c:v libx264 -s 1920x1080 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -s 1920x1080 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 6000k -r 30 -c:a copy -pass 2 -f mp4 -y OutputVideo
 
 
-    # 3000kbps 30fps ²»¸Ä±ä·Ö±æÂÊ ±àÂëÒôÆµ 
+    # 3000kbps 30fps ä¸æ”¹å˜åˆ†è¾¨ç‡ ç¼–ç éŸ³é¢‘ 
 a5  # InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -c:a aac -q:a 0 -ab 320k -ar 44100 -ac 2 -pass 2 -f mp4 -y OutputVideo
 
-    # 3000kbps 30fps ²»¸Ä±ä·Ö±æÂÊ ¸´ÖÆÒôÆµ
+    # 3000kbps 30fps ä¸æ”¹å˜åˆ†è¾¨ç‡ å¤åˆ¶éŸ³é¢‘
 a6  # InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -c:a copy -pass 2 -f mp4 -y OutputVideo
 
-    # 3000kbps 30fps µ÷Õû·Ö±æÂÊ 1280x720 ±àÂëÒôÆµ 
+    # 3000kbps 30fps è°ƒæ•´åˆ†è¾¨ç‡ 1280x720 ç¼–ç éŸ³é¢‘ 
 a7  # InputVideo -c:v libx264 -s 1280x720 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -s 1280x720 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -c:a aac -q:a 0 -ab 320k -ar 44100 -ac 2 -pass 2 -f mp4 -y OutputVideo
 
-    # 3000kbps 30fps µ÷Õû·Ö±æÂÊ 1280x720 ¸´ÖÆÒôÆµ 
+    # 3000kbps 30fps è°ƒæ•´åˆ†è¾¨ç‡ 1280x720 å¤åˆ¶éŸ³é¢‘ 
 a8  # InputVideo -c:v libx264 -s 1280x720 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -pass 1 -an -f mp4 -y NULL && InputVideo -c:v libx264 -s 1280x720 -preset veryslow -vprofile high -level:v 4.1 -pix_fmt yuv420p -b:v 3000k -r 30 -c:a copy -pass 2 -f mp4 -y OutputVideo
 
-########################################################### 2passÑ¹ÖÆ ###########################################################
+########################################################### 2passå‹åˆ¶ ###########################################################
 
 
-########################################################### gif½ø¶ÈÌõ ###########################################################
-   # ËÙ¶È=£¨ÊÓÆµ¿í¶È - Í¼Æ¬¿í¶È£©/ ÊÓÆµÊ±³¤  
-   # µ¥¸ö´¦Àí
+########################################################### gifè¿›åº¦æ¡ ###########################################################
+   # é€Ÿåº¦=ï¼ˆè§†é¢‘å®½åº¦ - å›¾ç‰‡å®½åº¦ï¼‰/ è§†é¢‘æ—¶é•¿  
+   # å•ä¸ªå¤„ç†
 
-   # µş¼Ógif
-b0 # InputVideo -ignore_loop 0 InputImage -filter_complex "[0:v][1:v]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo
+   # å åŠ gif
+b0 # InputVideo -ignore_loop 0 InputImage -filter_complex "[0:v][1:v]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo
 
-   # Ëõ·Åºóµş¼Ó					
-b1 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=100:-1[sv];[0:v][sv]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo	
+   # ç¼©æ”¾åå åŠ 					
+b1 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=100:-1[sv];[0:v][sv]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo	
 
-   # Ëõ·Å¿ÙÍ¼ºóµş¼Ó	
-b2 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=100:-1:-1[sv];[sv]colorkey=0xffffff:0.3:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # ç¼©æ”¾æŠ å›¾åå åŠ 	
+b2 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=100:-1:-1[sv];[sv]colorkey=0xffffff:0.3:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ²Ã¼ôºóµş¼Ó
-b3 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=32:y=7:w=98:h=68[cv];[0:v][cv]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # è£å‰ªåå åŠ 
+b3 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=32:y=7:w=98:h=68[cv];[0:v][cv]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ²Ã¼ô¿ÙÍ¼ºóµş¼Ó	
-b4 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=0:y=46:w=260:h=158[cv];[cv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # è£å‰ªæŠ å›¾åå åŠ 	
+b4 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=0:y=46:w=260:h=158[cv];[cv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ²Ã¼ôËõ·Å¿ÙÍ¼ºóµş¼Ó
-b5 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=57:y=93:w=200:h=113[cv];[cv]scale=100:-1[sv];[sv]colorkey=0xffffff:0.3:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # è£å‰ªç¼©æ”¾æŠ å›¾åå åŠ 
+b5 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=57:y=93:w=200:h=113[cv];[cv]scale=100:-1[sv];[sv]colorkey=0xffffff:0.3:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ²Ã¼ôËõ·Å·­×ª¿ÙÍ¼ºóµş¼Ó
-b6 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=0:y=40:w=300:h=198[cv];[cv]scale=100:-1[sv];[sv]hflip[fv];[fv]colorkey=0xffffff:0.15:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # è£å‰ªç¼©æ”¾ç¿»è½¬æŠ å›¾åå åŠ 
+b6 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]crop=x=0:y=40:w=300:h=198[cv];[cv]scale=100:-1[sv];[sv]hflip[fv];[fv]colorkey=0xffffff:0.15:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ¿ÙÍ¼ºóµş¼Ó
-b7 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]colorkey=0xffffff:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo	
+   # æŠ å›¾åå åŠ 
+b7 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]colorkey=0xffffff:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo	
 
-   # ·­×ªºóµş¼Ó
-b8 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]hflip[fv];[0:v][fv]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 	
+   # ç¿»è½¬åå åŠ 
+b8 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]hflip[fv];[0:v][fv]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 	
 	
-   # ·­×ª¿ÙÍ¼ºóµş¼Ó
-b9 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]hflip[fv];[fv]colorkey=0xffffff:0.1:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # ç¿»è½¬æŠ å›¾åå åŠ 
+b9 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]hflip[fv];[fv]colorkey=0xffffff:0.1:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-    # Ëõ·Å·­×ª¿ÙÍ¼ºóµş¼Ó
-b10 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=150:-1[sv];[sv]hflip[fv];[fv]colorkey=0xf6f6f6:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo # 		
+    # ç¼©æ”¾ç¿»è½¬æŠ å›¾åå åŠ 
+b10 # InputVideo -ignore_loop 0 InputImage -filter_complex "[1:v]scale=150:-1[sv];[sv]hflip[fv];[fv]colorkey=0xf6f6f6:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo # 		
 
-   # ÅúÁ¿´¦Àí
+   # æ‰¹é‡å¤„ç†
 
-   # µş¼Ógif
-c0 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[0:v][1:v]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo
+   # å åŠ gif
+c0 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[0:v][1:v]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo
 
-   # Ëõ·Åºóµş¼Ó					
-c1 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=150:-1[sv];[0:v][sv]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo
+   # ç¼©æ”¾åå åŠ 					
+c1 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=150:-1[sv];[0:v][sv]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo
 
-   # Ëõ·Å¿ÙÍ¼ºóµş¼Ó	
-c2 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=200:200:-1[sv];[sv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # ç¼©æ”¾æŠ å›¾åå åŠ 	
+c2 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=200:200:-1[sv];[sv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ²Ã¼ôºóµş¼Ó
-c3 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=16:y=96:w=15:h=10[cv];[0:v][cv]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # è£å‰ªåå åŠ 
+c3 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=16:y=96:w=15:h=10[cv];[0:v][cv]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ²Ã¼ô¿ÙÍ¼ºóµş¼Ó	
-c4 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=73:y=38:w=142:h=134[cv];[cv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # è£å‰ªæŠ å›¾åå åŠ 	
+c4 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=73:y=38:w=142:h=134[cv];[cv]colorkey=0x00ff00:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ²Ã¼ôËõ·Å¿ÙÍ¼ºóµş¼Ó
-c5 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=93:y=110:w=450:h=468[cv];[cv]scale=200:-1[sv];[sv]colorkey=0x63432b:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # è£å‰ªç¼©æ”¾æŠ å›¾åå åŠ 
+c5 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=93:y=110:w=450:h=468[cv];[cv]scale=200:-1[sv];[sv]colorkey=0x63432b:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ²Ã¼ôËõ·Å·­×ª¿ÙÍ¼ºóµş¼Ó
-c6 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=93:y=110:w=450:h=468[cv];[cv]scale=200:-1[sv];[sv]hflip[fv];[fv]colorkey=0x63432b:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # è£å‰ªç¼©æ”¾ç¿»è½¬æŠ å›¾åå åŠ 
+c6 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]crop=x=93:y=110:w=450:h=468[cv];[cv]scale=200:-1[sv];[sv]hflip[fv];[fv]colorkey=0x63432b:0.01:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-   # ¿ÙÍ¼ºóµş¼Ó
-c7 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]colorkey=0x00ff00:0.1:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo	
+   # æŠ å›¾åå åŠ 
+c7 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]colorkey=0x00ff00:0.1:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo	
 
-   # ·­×ªºóµş¼Ó
-c8 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]hflip[fv];[0:v][fv]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 				
+   # ç¿»è½¬åå åŠ 
+c8 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]hflip[fv];[0:v][fv]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 				
 
-   # ·­×ª¿ÙÍ¼ºóµş¼Ó
-c9 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]hflip[fv];[fv]colorkey=0xffffff:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo 
+   # ç¿»è½¬æŠ å›¾åå åŠ 
+c9 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]hflip[fv];[fv]colorkey=0xffffff:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo 
 
-    # Ëõ·Å·­×ª¿ÙÍ¼ºóµş¼Ó
-c10 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=150:-1[sv];[sv]hflip[fv];[fv]colorkey=0xf6f6f6:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*ËÙ¶È):y=(main_h-overlay_h)" -t Ê±³¤ -c:v libx264 -c:a copy -y OutputVideo #
+    # ç¼©æ”¾ç¿»è½¬æŠ å›¾åå åŠ 
+c10 # InputVideo -ignore_loop 0 InputImage*-1 -filter_complex "[1:v]scale=150:-1[sv];[sv]hflip[fv];[fv]colorkey=0xf6f6f6:0.05:0[ck];[0:v][ck]overlay=x=trunc(t*é€Ÿåº¦):y=(main_h-overlay_h)" -t æ—¶é•¿ -c:v libx264 -c:a copy -y OutputVideo #
 
-########################################################### gif½ø¶ÈÌõ ###########################################################
+########################################################### gifè¿›åº¦æ¡ ###########################################################
 
 
-c11 # InputVideo -filter_complex "[0:v]pad=w=2*iw[a];[0:v]hflip[right];[a][right]overlay=x=w" -y OutputVideo  #´¹Ö±¾µÏñ¶ş·ÖÆÁ
+c11 # InputVideo -filter_complex "[0:v]pad=w=2*iw[a];[0:v]hflip[right];[a][right]overlay=x=w" -y OutputVideo  #å‚ç›´é•œåƒäºŒåˆ†å±
 
 
-########################################################### Èı·ÖÆÁ ###########################################################
-   # µ¥¸ö´¦Àí
-d0 # InputVideo InputImage -filter_complex "[0:v]scale=428:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #ºáÆÁ Èı·ÖÆÁ ¿í1280 
-d1 # InputVideo InputImage -filter_complex "[0:v]scale=640:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #ºáÆÁ Èı·ÖÆÁ ¿í1920
+########################################################### ä¸‰åˆ†å± ###########################################################
+   # å•ä¸ªå¤„ç†
+d0 # InputVideo InputImage -filter_complex "[0:v]scale=428:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #æ¨ªå± ä¸‰åˆ†å± å®½1280 
+d1 # InputVideo InputImage -filter_complex "[0:v]scale=640:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #æ¨ªå± ä¸‰åˆ†å± å®½1920
 
-d2 # InputVideo InputImage -filter_complex "[0:v]scale=-1:428[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #ÊúÆÁ Èı·ÖÆÁ ¸ß1280
-d3 # InputVideo InputImage -filter_complex "[0:v]scale=-1:640[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #ÊúÆÁ Èı·ÖÆÁ ¸ß1920
+d2 # InputVideo InputImage -filter_complex "[0:v]scale=-1:428[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #ç«–å± ä¸‰åˆ†å± é«˜1280
+d3 # InputVideo InputImage -filter_complex "[0:v]scale=-1:640[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #ç«–å± ä¸‰åˆ†å± é«˜1920
 
-   # ÅúÁ¿´¦Àí
-d4 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=428:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #ºáÆÁ Èı·ÖÆÁ ¿í1280
-d5 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=640:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #ºáÆÁ Èı·ÖÆÁ ¿í1920
+   # æ‰¹é‡å¤„ç†
+d4 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=428:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #æ¨ªå± ä¸‰åˆ†å± å®½1280
+d5 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=640:-1[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=x=overlay_w[vout1];[vout1][v3]overlay=x=overlay_w*2" -y OutputVideo #æ¨ªå± ä¸‰åˆ†å± å®½1920
 
-d6 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=-1:428[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #ÊúÆÁ Èı·ÖÆÁ ¸ß1280
-d7 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=-1:640[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #ÊúÆÁ Èı·ÖÆÁ ¸ß1920
+d6 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=-1:428[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #ç«–å± ä¸‰åˆ†å± é«˜1280
+d7 # InputVideo InputImage*-1 -filter_complex "[0:v]scale=-1:640[sv];[sv]split=3[v1][v2][v3];[1:v][v1]overlay[vout];[vout][v2]overlay=y=overlay_h[vout1];[vout1][v3]overlay=y=overlay_h*2" -y OutputVideo #ç«–å± ä¸‰åˆ†å± é«˜1920
 
-########################################################### Èı·ÖÆÁ ###########################################################
+########################################################### ä¸‰åˆ†å± ###########################################################
 
-########################################################### ºáÆÁÊúÆÁ»¥×ª ###########################################################
+########################################################### æ¨ªå±ç«–å±äº’è½¬ ###########################################################
 
-d8  # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=iw:iw*9/16,boxblur=10:5,scale=1920:1080[bg];[b]scale=-1:1080[v];[bg][v]overlay=(W-w)/2:0" -c:v libx264 -c:a copy -y OutputVideo  #ÊúÆÁ×ªºáÆÁ 1920x1080
-d9  # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=ih*9/16:ih,boxblur=10:5,scale=1080:1920[bg];[b]scale=1080:-1[v];[bg][v]overlay=0:(H-h)/2" -c:v libx264 -c:a copy -y OutputVideo  #ºáÆÁ×ªÊúÆÁ 1080x1920
+d8  # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=iw:iw*9/16,boxblur=10:5,scale=1920:1080[bg];[b]scale=-1:1080[v];[bg][v]overlay=(W-w)/2:0" -c:v libx264 -c:a copy -y OutputVideo  #ç«–å±è½¬æ¨ªå± 1920x1080
+d9  # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=ih*9/16:ih,boxblur=10:5,scale=1080:1920[bg];[b]scale=1080:-1[v];[bg][v]overlay=0:(H-h)/2" -c:v libx264 -c:a copy -y OutputVideo  #æ¨ªå±è½¬ç«–å± 1080x1920
 
-d10 # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=iw:iw*9/16,boxblur=10:5,scale=1280:720[bg];[b]scale=-1:720[v];[bg][v]overlay=(W-w)/2:0" -c:v libx264 -c:a copy -y OutputVideo    #ÊúÆÁ×ªºáÆÁ 1280x720
-d11 # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=ih*9/16:ih,boxblur=10:5,scale=720:1280[bg];[b]scale=720:-1[v];[bg][v]overlay=0:(H-h)/2" -c:v libx264 -c:a copy -y OutputVideo    #ºáÆÁ×ªÊúÆÁ 720x1280
+d10 # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=iw:iw*9/16,boxblur=10:5,scale=1280:720[bg];[b]scale=-1:720[v];[bg][v]overlay=(W-w)/2:0" -c:v libx264 -c:a copy -y OutputVideo    #ç«–å±è½¬æ¨ªå± 1280x720
+d11 # InputVideo -filter_complex "split[a][b];[a]scale=iw/2:-1,crop=ih*9/16:ih,boxblur=10:5,scale=720:1280[bg];[b]scale=720:-1[v];[bg][v]overlay=0:(H-h)/2" -c:v libx264 -c:a copy -y OutputVideo    #æ¨ªå±è½¬ç«–å± 720x1280
 
-########################################################### ºáÆÁÊúÆÁ»¥×ª ###########################################################
+########################################################### æ¨ªå±ç«–å±äº’è½¬ ###########################################################
 
 
-###########################################################Í¼Æ¬¼ÓÎÄ±¾Ë®Ó¡###########################################################
+###########################################################å›¾ç‰‡åŠ æ–‡æœ¬æ°´å°###########################################################
 
-e0 # InputImage -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=ĞŞ¸Ä:y=ĞŞ¸Ä:shadowy=2 OutputImage		#×Ô¶¨ÒåË®Ó¡×ø±ê
+e0 # InputImage -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=ä¿®æ”¹:y=ä¿®æ”¹:shadowy=2 OutputImage		#è‡ªå®šä¹‰æ°´å°åæ ‡
 
-e1 # InputImage -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=0:y=0:shadowy=2 OutputImage			#×óÉÏ½ÇË®Ó¡
-e2 # InputImage -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=(w-text_w)/2:y=0 OutputImage			#ÉÏÃæÖĞ¼äË®Ó¡
-e3 # InputImage -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=w-tw:y=0:shadowy=2 OutputImage		#ÓÒÉÏ½ÇË®Ó¡
+e1 # InputImage -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=0:y=0:shadowy=2 OutputImage			#å·¦ä¸Šè§’æ°´å°
+e2 # InputImage -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=(w-text_w)/2:y=0 OutputImage			#ä¸Šé¢ä¸­é—´æ°´å°
+e3 # InputImage -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=w-tw:y=0:shadowy=2 OutputImage		#å³ä¸Šè§’æ°´å°
 
-e4 # InputImage -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=(w-text_w)/2:y=(h-text_h)/2 OutputImage	#ÕıÖĞ¼äË®Ó¡
+e4 # InputImage -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=(w-text_w)/2:y=(h-text_h)/2 OutputImage	#æ­£ä¸­é—´æ°´å°
 
-e5 # InputImage -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=0:y=h-th:shadowy=2 OutputImage		#×óÏÂ½ÇË®Ó¡
-e6 # InputImage -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=(w-text_w)/2:y=h-th:shadowy=2 OutputImage	#ÏÂÃæÖĞ¼äË®Ó¡
-e7 # InputImage -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=w-text_w:y=h-th:shadowy=2 OutputImage	#ÓÒÏÂ½ÇË®Ó¡
+e5 # InputImage -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=0:y=h-th:shadowy=2 OutputImage		#å·¦ä¸‹è§’æ°´å°
+e6 # InputImage -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=(w-text_w)/2:y=h-th:shadowy=2 OutputImage	#ä¸‹é¢ä¸­é—´æ°´å°
+e7 # InputImage -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=w-text_w:y=h-th:shadowy=2 OutputImage	#å³ä¸‹è§’æ°´å°
 
-###########################################################Í¼Æ¬¼ÓÎÄ±¾Ë®Ó¡###########################################################
+###########################################################å›¾ç‰‡åŠ æ–‡æœ¬æ°´å°###########################################################
 
-###########################################################ÊÓÆµ¼ÓÎÄ±¾Ë®Ó¡###########################################################
+###########################################################è§†é¢‘åŠ æ–‡æœ¬æ°´å°###########################################################
 
-e8  # InputVideo -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=ĞŞ¸Ä:y=ĞŞ¸Ä:shadowy=2 OutputVideo		#×Ô¶¨ÒåË®Ó¡×ø±ê
+e8  # InputVideo -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=ä¿®æ”¹:y=ä¿®æ”¹:shadowy=2 OutputVideo		#è‡ªå®šä¹‰æ°´å°åæ ‡
 
-e9  # InputVideo -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=0:y=0:shadowy=2 OutputVideo			#×óÉÏ½ÇË®Ó¡
-e10 # InputVideo -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=(w-text_w)/2:y=0 OutputVideo		#ÉÏÃæÖĞ¼äË®Ó¡
-e11 # InputVideo -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=w-tw:y=0:shadowy=2 OutputVideo		#ÓÒÉÏ½ÇË®Ó¡
+e9  # InputVideo -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=0:y=0:shadowy=2 OutputVideo			#å·¦ä¸Šè§’æ°´å°
+e10 # InputVideo -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=(w-text_w)/2:y=0 OutputVideo		#ä¸Šé¢ä¸­é—´æ°´å°
+e11 # InputVideo -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=w-tw:y=0:shadowy=2 OutputVideo		#å³ä¸Šè§’æ°´å°
 
-e12 # InputVideo -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=(w-text_w)/2:y=(h-text_h)/2 OutputVideo	#ÕıÖĞ¼äË®Ó¡
+e12 # InputVideo -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=(w-text_w)/2:y=(h-text_h)/2 OutputVideo	#æ­£ä¸­é—´æ°´å°
 
-e13 # InputVideo -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=0:y=h-th:shadowy=2 OutputVideo		#×óÏÂ½ÇË®Ó¡
-e14 # InputVideo -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=(w-text_w)/2:y=h-th:shadowy=2 OutputVideo	#ÏÂÃæÖĞ¼äË®Ó¡
-e15 # InputVideo -vf drawtext=fontcolor=white:fontfile=Î¢ÈíÑÅºÚ:fontsize=50:text='ÀÏ°åÔÙÀ´Á½Íë·¹':x=w-text_w:y=h-th:shadowy=2 OutputVideo	#ÓÒÏÂ½ÇË®Ó¡
+e13 # InputVideo -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=0:y=h-th:shadowy=2 OutputVideo		#å·¦ä¸‹è§’æ°´å°
+e14 # InputVideo -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=(w-text_w)/2:y=h-th:shadowy=2 OutputVideo	#ä¸‹é¢ä¸­é—´æ°´å°
+e15 # InputVideo -vf drawtext=fontcolor=white:fontfile=å¾®è½¯é›…é»‘:fontsize=50:text='è€æ¿å†æ¥ä¸¤ç¢—é¥­':x=w-text_w:y=h-th:shadowy=2 OutputVideo	#å³ä¸‹è§’æ°´å°
 
-###########################################################ÊÓÆµ¼ÓÎÄ±¾Ë®Ó¡###########################################################
+###########################################################è§†é¢‘åŠ æ–‡æœ¬æ°´å°###########################################################
 
 
-###########################################################Í¼Æ¬¼ÓÍ¼Æ¬Ë®Ó¡###########################################################
+###########################################################å›¾ç‰‡åŠ å›¾ç‰‡æ°´å°###########################################################
 
-f0 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=ĞŞ¸Ä:y=ĞŞ¸Ä" -y OutputImage						#×Ô¶¨ÒåË®Ó¡×ø±ê
+f0 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=ä¿®æ”¹:y=ä¿®æ”¹" -y OutputImage						#è‡ªå®šä¹‰æ°´å°åæ ‡
 
-f1 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=0:y=0" -y OutputImage						#×óÉÏ½ÇË®Ó¡
-f2 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:y=0" -y OutputImage				#ÉÏÃæÖĞ¼äË®Ó¡
-f3 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w):y=0" -y OutputImage				#ÓÒÉÏ½ÇË®Ó¡
+f1 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=0:y=0" -y OutputImage						#å·¦ä¸Šè§’æ°´å°
+f2 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:y=0" -y OutputImage				#ä¸Šé¢ä¸­é—´æ°´å°
+f3 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w):y=0" -y OutputImage				#å³ä¸Šè§’æ°´å°
 
-f4 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2" -y OutputImage		#ÕıÖĞ¼äË®Ó¡
+f4 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2" -y OutputImage		#æ­£ä¸­é—´æ°´å°
 
-f5 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=0:y=(main_h-overlay_h)" -y OutputImage				#×óÏÂ½ÇË®Ó¡
-f6 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:(main_h-overlay_h)" -y OutputImage		#ÏÂÃæÖĞ¼äË®Ó¡
-f7 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w):y=(main_h-overlay_h)" -y OutputImage		#ÓÒÏÂ½ÇË®Ó¡
+f5 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=0:y=(main_h-overlay_h)" -y OutputImage				#å·¦ä¸‹è§’æ°´å°
+f6 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w)/2:(main_h-overlay_h)" -y OutputImage		#ä¸‹é¢ä¸­é—´æ°´å°
+f7 # InputImage InputImage*-1 -qscale 0 -filter_complex "overlay=x=(main_w-overlay_w):y=(main_h-overlay_h)" -y OutputImage		#å³ä¸‹è§’æ°´å°
 
-###########################################################Í¼Æ¬¼ÓÍ¼Æ¬Ë®Ó¡###########################################################
+###########################################################å›¾ç‰‡åŠ å›¾ç‰‡æ°´å°###########################################################
 
 
-###########################################################ÊÓÆµ¼ÓÍ¼Æ¬Ë®Ó¡###########################################################
+###########################################################è§†é¢‘åŠ å›¾ç‰‡æ°´å°###########################################################
 
-f8  # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=ĞŞ¸Ä:y=ĞŞ¸Ä" -y OutputVideo						#×Ô¶¨ÒåË®Ó¡×ø±ê
+f8  # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=ä¿®æ”¹:y=ä¿®æ”¹" -y OutputVideo						#è‡ªå®šä¹‰æ°´å°åæ ‡
 
-f9  # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=0:y=0" -y OutputVideo						#×óÉÏ½ÇË®Ó¡
-f10 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:y=0" -y OutputVideo				#ÉÏÃæÖĞ¼äË®Ó¡
-f11 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w):y=0" -y OutputVideo				#ÓÒÉÏ½ÇË®Ó¡
+f9  # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=0:y=0" -y OutputVideo						#å·¦ä¸Šè§’æ°´å°
+f10 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:y=0" -y OutputVideo				#ä¸Šé¢ä¸­é—´æ°´å°
+f11 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w):y=0" -y OutputVideo				#å³ä¸Šè§’æ°´å°
 
-f12 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2" -y OutputVideo		#ÕıÖĞ¼äË®Ó¡
+f12 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2" -y OutputVideo		#æ­£ä¸­é—´æ°´å°
 
-f13 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=0:y=(main_h-overlay_h)" -y OutputVideo				#×óÏÂ½ÇË®Ó¡
-f14 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:(main_h-overlay_h)" -y OutputVideo		#ÏÂÃæÖĞ¼äË®Ó¡
-f15 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w):y=(main_h-overlay_h)" -y OutputVideo		#ÓÒÏÂ½ÇË®Ó¡
+f13 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=0:y=(main_h-overlay_h)" -y OutputVideo				#å·¦ä¸‹è§’æ°´å°
+f14 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w)/2:(main_h-overlay_h)" -y OutputVideo		#ä¸‹é¢ä¸­é—´æ°´å°
+f15 # InputVideo InputImage*-1 -c:a copy -filter_complex "overlay=x=(main_w-overlay_w):y=(main_h-overlay_h)" -y OutputVideo		#å³ä¸‹è§’æ°´å°
 
-###########################################################ÊÓÆµ¼ÓÍ¼Æ¬Ë®Ó¡###########################################################
+###########################################################è§†é¢‘åŠ å›¾ç‰‡æ°´å°###########################################################
 
 
 
-g0 # -thread_queue_size 1000 -f gdigrab -s 655x370 -offset_x 59 -offset_y 276 -r 15 -i desktop -vcodec libx264 -y OutputVideo	#±£´æÆÁÄ»ÇøÓò³ÉÊÓÆµ
-g1 # -thread_queue_size 1000 -f gdigrab -s 544x548 -offset_x 90 -offset_y 178 -r 15 -i desktop -y OutputImage			#±£´æÆÁÄ»ÇøÓò³Égif
+g0 # -thread_queue_size 1000 -f gdigrab -s 655x370 -offset_x 59 -offset_y 276 -r 15 -i desktop -vcodec libx264 -y OutputVideo	#ä¿å­˜å±å¹•åŒºåŸŸæˆè§†é¢‘
+g1 # -thread_queue_size 1000 -f gdigrab -s 544x548 -offset_x 90 -offset_y 178 -r 15 -i desktop -y OutputImage			#ä¿å­˜å±å¹•åŒºåŸŸæˆgif
 
 
-g2 # InputURL -c copy -y OutputVideo 				#±£´æÍøÂçÊÓÆµÁ÷
-g3 # -re InputVideo -acodec aac -ar 32000 -vcodec copy -f flv OutputURL				#ÊÓÆµÍÆÁ÷
-g4 # -re InputVideo -acodec aac -ar 32000 -vcodec copy -f flv rtmp://127.0.0.1:1935/live 	#ÊÓÆµÍÆÁ÷
+g2 # InputURL -c copy -y OutputVideo 				#ä¿å­˜ç½‘ç»œè§†é¢‘æµ
+g3 # -re InputVideo -acodec aac -ar 32000 -vcodec copy -f flv OutputURL				#è§†é¢‘æ¨æµ
+g4 # -re InputVideo -acodec aac -ar 32000 -vcodec copy -f flv rtmp://127.0.0.1:1935/live 	#è§†é¢‘æ¨æµ
 
 
-   # Â¼ÖÆÉãÏñÍ·ºÍÂó¿Ë·çÉùÒô
-g5 # -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="Âó¿Ë·ç (Realtek High Definition Audio)" -vcodec libx264 -s 1280x720 -r 25 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -y OutputVideo	
+   # å½•åˆ¶æ‘„åƒå¤´å’Œéº¦å…‹é£å£°éŸ³
+g5 # -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="éº¦å…‹é£ (Realtek High Definition Audio)" -vcodec libx264 -s 1280x720 -r 25 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -y OutputVideo	
 
-   # Â¼ÖÆ×ÀÃæºÍÏµÍ³ÉùÒô
-g6 # -thread_queue_size 1000 -f gdigrab -i desktop -f dshow -i audio="Á¢ÌåÉù»ìÒô (Realtek High Definition Audio)" -vcodec libx264 -s 1920x1080 -r 25 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -y OutputVideo	
+   # å½•åˆ¶æ¡Œé¢å’Œç³»ç»Ÿå£°éŸ³
+g6 # -thread_queue_size 1000 -f gdigrab -i desktop -f dshow -i audio="ç«‹ä½“å£°æ··éŸ³ (Realtek High Definition Audio)" -vcodec libx264 -s 1920x1080 -r 25 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -y OutputVideo	
 
 
-   # Â¼ÖÆÉãÏñÍ·ºÍÂó¿Ë·çµ½Ò»¸öÊÓÆµ Â¼ÖÆ×ÀÃæºÍÏµÍ³ÉùÒôµ½ÁíÒ»¸öÊÓÆµ
-g7 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="Âó¿Ë·ç (Realtek High Definition Audio)" -vcodec libx264 -s 1920x1080  -r 20 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -map 0 -map 1 -y OutputVideo -thread_queue_size 1000 -f gdigrab -i desktop -f dshow -i audio="Á¢ÌåÉù»ìÒô (Realtek High Definition Audio)" -vcodec libx264 -b:v 6000k -s 1920x1080 -r 20 -acodec aac -b:a 320k -ar 44100 -ac 2  -map 2 -map 3 -y OutputVideo	
+   # å½•åˆ¶æ‘„åƒå¤´å’Œéº¦å…‹é£åˆ°ä¸€ä¸ªè§†é¢‘ å½•åˆ¶æ¡Œé¢å’Œç³»ç»Ÿå£°éŸ³åˆ°å¦ä¸€ä¸ªè§†é¢‘
+g7 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="éº¦å…‹é£ (Realtek High Definition Audio)" -vcodec libx264 -s 1920x1080  -r 20 -b:v 6000k -acodec aac -b:a 320k -ar 44100 -ac 2 -map 0 -map 1 -y OutputVideo -thread_queue_size 1000 -f gdigrab -i desktop -f dshow -i audio="ç«‹ä½“å£°æ··éŸ³ (Realtek High Definition Audio)" -vcodec libx264 -b:v 6000k -s 1920x1080 -r 20 -acodec aac -b:a 320k -ar 44100 -ac 2  -map 2 -map 3 -y OutputVideo	
 
 
-   # Â¼ÖÆÉãÏñÍ·ËõĞ¡3±¶ºóµş¼Óµ½×ÀÃæÊÓÆµµÄÓÒÏÂ½Ç£¬µ÷ÕûÂ¼ÖÆÂó¿Ë·çÒôÁ¿Îª0.3£¬ÏµÍ³ÒôÁ¿Îª0.6 ±£´æµ½±¾µØ
-g8 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="Âó¿Ë·ç (Realtek High Definition Audio)" -thread_queue_size 1000 -s 1920x1080 -r 20 -f gdigrab -i desktop -f dshow -i audio="Á¢ÌåÉù»ìÒô (Realtek High Definition Audio)" -filter_complex "[0:v]scale=iw/3:-1[sv];[2:v][sv]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[1:a]volume=0.3[a0];[3:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -vcodec libx264 -b:v 5000k -acodec aac -b:a 128k -ar 44100 -ac 2 -y OutputVideo 
+   # å½•åˆ¶æ‘„åƒå¤´ç¼©å°3å€åå åŠ åˆ°æ¡Œé¢è§†é¢‘çš„å³ä¸‹è§’ï¼Œè°ƒæ•´å½•åˆ¶éº¦å…‹é£éŸ³é‡ä¸º0.3ï¼Œç³»ç»ŸéŸ³é‡ä¸º0.6 ä¿å­˜åˆ°æœ¬åœ°
+g8 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="éº¦å…‹é£ (Realtek High Definition Audio)" -thread_queue_size 1000 -s 1920x1080 -r 20 -f gdigrab -i desktop -f dshow -i audio="ç«‹ä½“å£°æ··éŸ³ (Realtek High Definition Audio)" -filter_complex "[0:v]scale=iw/3:-1[sv];[2:v][sv]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[1:a]volume=0.3[a0];[3:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -vcodec libx264 -b:v 5000k -acodec aac -b:a 128k -ar 44100 -ac 2 -y OutputVideo 
 
 
-   # Â¼ÖÆÉãÏñÍ·ËõĞ¡3±¶ºóµş¼Óµ½×ÀÃæÊÓÆµµÄÓÒÏÂ½Ç£¬µ÷ÕûÂ¼ÖÆÂó¿Ë·çÒôÁ¿Îª0.3£¬ÏµÍ³ÒôÁ¿Îª0.6 rtmpÍÆÁ÷
-g9 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="Âó¿Ë·ç (Realtek High Definition Audio)" -thread_queue_size 1000 -s 1920x1080 -r 20 -f gdigrab -i desktop -f dshow -i audio="Á¢ÌåÉù»ìÒô (Realtek High Definition Audio)" -filter_complex "[0:v]scale=iw/3:-1[sv];[2:v][sv]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[1:a]volume=0.3[a0];[3:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -vcodec libx264 -b:v 5000k -acodec aac -b:a 128k -ar 44100 -ac 2 -f flv rtmp://127.0.0.1:1935/live
+   # å½•åˆ¶æ‘„åƒå¤´ç¼©å°3å€åå åŠ åˆ°æ¡Œé¢è§†é¢‘çš„å³ä¸‹è§’ï¼Œè°ƒæ•´å½•åˆ¶éº¦å…‹é£éŸ³é‡ä¸º0.3ï¼Œç³»ç»ŸéŸ³é‡ä¸º0.6 rtmpæ¨æµ
+g9 # -thread_queue_size 1000 -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="éº¦å…‹é£ (Realtek High Definition Audio)" -thread_queue_size 1000 -s 1920x1080 -r 20 -f gdigrab -i desktop -f dshow -i audio="ç«‹ä½“å£°æ··éŸ³ (Realtek High Definition Audio)" -filter_complex "[0:v]scale=iw/3:-1[sv];[2:v][sv]overlay=shortest=1:x=(main_w-overlay_w):y=(main_h-overlay_h)[vout];[1:a]volume=0.3[a0];[3:a]volume=0.6[a1];[a0][a1]amix=inputs=2:duration=shortest[aout]" -map "[vout]" -map "[aout]" -vcodec libx264 -b:v 5000k -acodec aac -b:a 128k -ar 44100 -ac 2 -f flv rtmp://127.0.0.1:1935/live
 
 
 
