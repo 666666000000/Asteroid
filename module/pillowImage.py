@@ -5,8 +5,8 @@ from PIL import Image
 from . import core
 from .common import funcs
 
-keywords = {"rs","ro","crop","gray","wm","cut"}
-describe = "图片批量缩放、旋转、裁剪、转灰度、加水印、九宫格"
+keywords = {"rs","ro","crop","gray","wm","cut","g2s","s2g"}
+describe = "图片批量缩放、旋转、裁剪、转灰度、加水印、九宫格、gif转图片序列、图片序列转gif"
 
 def resolve(line):
 	arg,argLen = core.getArgList(line)
@@ -22,6 +22,10 @@ def resolve(line):
 		waterMark(arg,argLen)
 	elif arg[0] == "cut":
 		cutImage(arg,argLen)
+	elif arg[0] == "g2s":
+		gif2Sequence(arg,argLen)
+	elif arg[0] == "s2g":
+		sequence2Gif(arg,argLen)
 
 #缩放图片
 def resizeImg(arg,argLen):
@@ -194,6 +198,7 @@ def waterMark(arg,argLen):
 			out = out.convert("RGB")
 		out.save(dstPath,quality = 95)
 
+#切割图片
 def cutImage(arg,argLen):
 	if argLen < 3:
 		print(f"参数错误:{arg}")
@@ -236,3 +241,74 @@ def cutImage(arg,argLen):
 				out = img.crop([ xStart + x*xStep, yStart + y*yStep, xStart + x*xStep + xStep, yStart + y*yStep + yStep ])
 				out.save(f"{outDir}\\{filename}-{id}{suffix}",quality = 95)
 				id += 1
+
+#gif转图片序列
+def gif2Sequence(arg,argLen):
+	if argLen < 3:
+		print(f"参数错误:{arg}")
+		return
+	src = core.getInputPath(arg[1])
+	if not src:
+		print("源路径错误")
+		return
+	outDir = core.getOutputDirPath(arg[2],src[0],"first","none","none")
+	if not outDir:
+		return
+	step = 0
+	if argLen >=4 :
+		try:
+			step = int(arg[3])
+		except:
+			step = 1
+	for s in src:
+		try:
+			img = Image.open(s)
+		except IOError:
+			print("打开文件失败：" + s)
+			continue
+		palette = img.getpalette()
+		try:
+			while True:
+				img.putpalette(palette)
+				if outDir.endswith(".gif") or outDir.endswith(".png"):
+					newImg = Image.new("RGBA", img.size)
+				else:
+					newImg = Image.new("RGB", img.size)
+				newImg.paste(img)
+				dstPath = core.getOutputFilePath(outDir, s, "checkDir")
+				newImg.save(dstPath)
+				if step == 0:
+					break
+				img.seek(img.tell() + step)
+		except EOFError:
+			pass
+
+#图片序列转gif
+def sequence2Gif(arg,argLen):
+	if argLen < 4:
+		print(f"参数错误:{arg}")
+		return
+	src = core.getInputPath(arg[1])
+	if not src:
+		print("源路径错误")
+		return
+	outDir = core.getOutputDirPath(arg[2],src[0],"first","none","none")
+	if not outDir:
+		return
+	try:
+		d = int(arg[3])
+	except:
+		print("时间错误：" + arg[3])
+		return
+	frames = []
+	for s in src:
+		images = os.listdir(s)
+		if not images:
+			print("未找到图片")
+			continue
+		for img in images:
+			frames.append(Image.open(os.path.join(s,img)))
+		dstPath = core.getOutputFilePath(outDir, s, "checkDir")
+		print(dstPath)
+		frames[0].save(dstPath, format='GIF', append_images=frames[1:], save_all=True, duration=d, loop=0)
+		frames.clear()
