@@ -596,7 +596,7 @@ def getOutputFilePath(outDir,inputPath,check):
 		if outDir.find(".*") != -1:
 			outDir = outDir.replace(".*",suffix,1)
 		if outDir.find("*") != -1:
-			outDir = outDir.replace("*",name,1)
+			outDir = outDir.replace("*",name)
 	if check == "checkDir":
 		if not checkDir(outDir,"file"):
 			return
