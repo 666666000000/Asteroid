@@ -46,19 +46,19 @@ def resolveShortcut(key):
 				sendShortcut(s.strip())
 	command = commandShortcut[key][1]
 	mode = commandShortcut[key][2]
-	isRun = commandShortcut[key][3]
+	run = commandShortcut[key][3]
 	if mode == "None":
 		mode = None
 	if mode and mode not in modeModules:
 		setEntry(f"模式错误:{mode}")
 		return
-	if isRun == "run" or isRun == "runs":
+	if run == "1" or run == "2":
 		if command.find(";;") == -1:
 			submit(None,command,mode)
 		else:
 			for c in command.split(";;"):
 				submit(None,c,mode)
-		if isRun == "run":
+		if run == "1":
 			return True
 	else:
 		if command != "None":
@@ -113,11 +113,12 @@ def loadShortcut():
 	if not commandShortcut:
 		return
 	for key,value in commandShortcut.items():
-		if value[4] == "local":
+		for i in range(len(value)):
+			value[i] = value[i].split(":")[1].strip()
+		if value[4] == "False":
 			input.bind(f"<{key}>", localEventHandler)
 		else:
-			isSuppress = True if value[5] == "suppress" else False
-			keyboard.add_hotkey(key, globalEventHandler, args = [key], suppress = isSuppress )
+			keyboard.add_hotkey(key, globalEventHandler, args = [key], suppress = True if value[5] == "True" else False )
 
 def resetMode(mode,color = None):
 	global currentMode,lastMode,currentColor,lastColor
@@ -282,7 +283,7 @@ def resolve(line):
 		runCommandList(arg,argLen)
 	elif arg[0] == "kw":
 		printKeywords(arg,argLen)
-	elif arg[0] == "lm":
+	elif arg[0] == "i":
 		reloadModule(arg,argLen)
 	elif arg[0] == "h":
 		hide = True
@@ -301,7 +302,7 @@ def resolve(line):
 def submit(event,line,runMode = None):
 	clearEntry()
 	mode = runMode if runMode else currentMode
-	if line and line != "printClip":
+	if line and line != "printclip":
 		hy[mode].add(line)
 	if mode != core.normalMode:
 		modeResolve(line,mode)
