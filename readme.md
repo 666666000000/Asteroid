@@ -23,13 +23,13 @@
 
 #### 命令
 `run` 执行多条命令</br>
-`lm l` 打印所有模块名及加载情况</br>
-`lm` 加载所有模块</br>
-`lm n` 加载软件启动后新复制到module文件夹内的模块</br>
-`lm name` 按名称加载模块</br>
-`lm -name` 在模块列表里搜索name并加载</br>
-`lm a/b/c` 加载a/b/c标记的模块</br>
-`lm index` 加载第index个模块</br>
+`i l` 打印所有模块名及加载情况</br>
+`i` 加载所有模块</br>
+`i n` 加载软件启动后新复制到module文件夹内的模块</br>
+`i name` 按名称加载模块</br>
+`i -name` 在模块列表里搜索name并加载</br>
+`i a/b/c` 加载a/b/c标记的模块</br>
+`i index` 加载第index个模块</br>
 `kw` 打印可用命令</br>
 `kw command` 查找命令所在模块</br>
 `h` 隐藏输入框</br>
