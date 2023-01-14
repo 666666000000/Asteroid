@@ -302,7 +302,7 @@ def resolve(line):
 def submit(event,line,runMode = None):
 	clearEntry()
 	mode = runMode if runMode else currentMode
-	if line and line != "printclip":
+	if line and line != "printClip":
 		hy[mode].add(line)
 	if mode != core.normalMode:
 		modeResolve(line,mode)
