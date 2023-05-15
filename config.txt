@@ -4,6 +4,20 @@ self
 search
 tool
 
+<a>
+ssh
+saveAs
+timeCount
+calculator
+processFile
+
+<b>
+extract
+preview
+pillow
+download
+extract
+
 <d>
 extract
 preview
