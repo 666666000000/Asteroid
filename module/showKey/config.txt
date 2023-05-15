@@ -1,0 +1,10 @@
+<keylist>
+esc
+alt+c
+alt+b
+alt+n
+alt+space
+
+<mouselist>
+double left
+right

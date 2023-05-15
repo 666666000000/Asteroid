@@ -1,0 +1,13 @@
+<autoload>
+core
+self
+search
+tool
+
+<d>
+extract
+preview
+download
+
+<autorun>
+

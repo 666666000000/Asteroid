@@ -1,0 +1,35 @@
+# start:是否在软件启动后启动闹钟 True 为是
+# loop: 所有闹钟结束时是否开始下一天的闹钟
+
+<config>
+start:	False
+loop:   True
+
+
+<7:00:00>
+status:	on
+alarm:  True
+day:	1234567
+msg:	早餐
+pic:	1.jpg
+ring:	所念皆星河.mp3
+
+
+<12:00:00>
+status:	on
+alarm:  True
+day:	1234567
+msg:	中餐
+pic:	2.jpg
+ring:	i wanted you.mp3
+
+
+<18:00:00>
+status: on
+alarm:  True
+day:	1234567
+msg:	晚餐
+pic:	3.jpg
+ring:	遇见那样的美.mp3
+
+

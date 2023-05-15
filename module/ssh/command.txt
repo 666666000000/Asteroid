@@ -1,0 +1,59 @@
+<i>
+send : yum install -y InputArg
+
+<ls>
+send : ls /usr
+
+<inet>
+send : yum install net-tools.x86_64
+
+<idocker>
+send : yum install -y yum-utils device-mapper-persistent-data lvm2
+recv : [root
+send : yum-config-manager --add-repo https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
+recv : [root
+send : yum clean all && yum makecache
+recv : [root
+send : yum -y install docker-ce docker-ce-cli containerd.io
+recv : [root
+send : systemctl start docker
+recv : [root
+send : systemctl enable docker
+recv : [root
+send : docker version
+
+<redis>
+send : docker pull redis
+recv : [root
+send : mkdir -p /usr/local/docker/mydata/redis/conf
+recv : [root
+send : mkdir -p /usr/local/docker/mydata/redis/data
+recv : [root
+put  : D:\123\redis.conf > /usr/local/docker/mydata/redis/conf
+send : docker run -p 16379:6379 --name redis -v /usr/local/docker/mydata/redis/data:/data -v /usr/local/docker/mydata/redis/conf/redis.conf:/etc/redis/redis.conf -d redis redis-server /etc/redis/redis.conf
+recv : [root
+send : docker ps
+
+<nginx>
+send : docker pull nginx
+recv : [root
+send : mkdir -p /home/nginx/conf
+recv : [root
+send : mkdir -p /home/nginx/log
+recv : [root
+send : mkdir -p /home/nginx/html
+recv : [root
+send : docker run --name nginx -p 8080:80 -d nginx
+recv : [root
+send : docker cp nginx:/etc/nginx/nginx.conf /home/nginx/conf/nginx.conf
+recv : [root
+send : docker cp nginx:/etc/nginx/conf.d /home/nginx/conf/conf.d
+recv : [root
+send : docker cp nginx:/usr/share/nginx/html /home/nginx/
+recv : [root
+send : docker stop nginx
+recv : [root
+send : docker rm nginx
+recv : [root
+send : docker run -p 8080:80 --name nginx -v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /home/nginx/conf/conf.d:/etc/nginx/conf.d -v /home/nginx/log:/var/log/nginx -v /home/nginx/html:/usr/share/nginx/html -d nginx
+

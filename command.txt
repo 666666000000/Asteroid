@@ -1,0 +1,6 @@
+<d>
+ret 1 40 | p1
+dl wb p1 | dp1
+ret 41 | p2
+dl wb p2 | dp2
+

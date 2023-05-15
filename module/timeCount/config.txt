@@ -1,0 +1,9 @@
+<ls>
+mode:n
+command:ssh 1 ls
+command:sa cs\<i>.jpg s
+
+<cal>
+mode:n
+command:cal 111*222
+command:cal on

@@ -1,0 +1,112 @@
+pip # pip install InputName -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+ip # ipconfig
+
+ipa # ipconfig /all
+
+ns # netstat -ano
+
+pi # ping InputArg
+
+pt # ping -t InputArg
+
+tr # tracert InputArg
+
+nl # nslookup InputArg
+
+server # python -m http.server
+
+#########################################################  you-get  #########################################################
+
+0 # you-get -i InputURL
+
+1 # you-get -o OutputDir InputURL
+
+2 # you-get --format == mp4hd -o OutputDir InputURL
+
+3 # you-get --format == dash-flv -o OutputDir InputURL
+
+4 # you-get InputURL
+
+#########################################################  you-get  #########################################################
+
+
+#########################################################  youtube-dl  #########################################################
+
+10 # youtube-dl --all-formats InputURL 				
+
+11 # youtube-dl --list-formats InputURL 	
+
+12 # youtube-dl -f 22 InputURL 				
+
+13 # youtube-dl --write-sub --all-subs InputURL 		
+
+14 # youtube-dl -f bestvideo+bestaudio InputURL
+
+15 # youtube-dl -f bestvideo+bestaudio -o %(title)s-%(id)s.%(ext)s InputURL
+
+#########################################################  youtube-dl  #########################################################
+
+
+#########################################################  yt-dlp  #########################################################
+
+20 # yt-dlp --list-formats InputURL
+
+21 # yt-dlp --dump-json InputURL
+
+22 # yt-dlp -f "best[height>=720]" InputURL -o 'OutputDir/%(id)s.%(ext)s'
+
+23 # yt-dlp -f 'bv*+ba' InputURL -o 'OutputDir/%(id)s.%(ext)s'
+
+24 # yt-dlp -f 'bv*[height=1080]+ba' InputURL -o 'OutputDir/%(id)s.%(ext)s'
+
+25 # yt-dlp -f 'bv[height=1080][ext=mp4]+ba[ext=m4a]' --merge-output-format mp4 InputURL -o 'OutputDir/%(id)s.mp4'
+
+26 # yt-dlp -f 'bv[height=1080][ext=mp4]+ba[ext=m4a]' --embed-thumbnail --merge-output-format mp4 InputURL -o 'OutputDir/%(id)s.mp4'
+
+27 # yt-dlp -f 'bv[height=1080][ext=mp4]+ba[ext=m4a]' --embed-subs --merge-output-format mp4 InputURL -o 'OutputDir/%(id)s.mp4'
+
+28 # yt-dlp -f 'bv[height=1080][ext=mp4]+ba[ext=m4a]' --embed-metadata --merge-output-format mp4 InputURL -o 'OutputDir/%(id)s.mp4'
+
+29 # yt-dlp -f 'ba' -x --audio-format mp3 InputURL -o 'OutputDir/%(id)s.mp3'
+
+30 # yt-dlp -f 'bv*[height=1080]+ba' --download-archive videos.txt  InputURL -o 'OutputDir/%(channel_id)s/%(playlist_id)s/%(id)s.%(ext)s'
+
+31 # yt-dlp -f 'bv*[height=720]+ba' --download-archive videos.txt InputURL -o 'OutputDir/%(channel)s/%(title)s.%(ext)s'
+
+#########################################################  yt-dlp  #########################################################
+
+#########################################################  aria2c  #########################################################
+
+a0 # aria2c InputURL
+
+a1 # aria2c -d OutputDir InputURL
+
+a2 # aria2c -o InputArg InputURL
+
+a3 # aria2c -o InputArg -d OutputDir InputURL
+
+a4 # aria2c -s5 -x5 -j10 -d OutputDir InputURL
+
+a5 # aria2c -s5 -x5 -j10 -c -d OutputDir InputURL
+
+a6 # aria2c -c -s2 InputURL
+
+a7 # aria2c --max-download-limit=300K -s10 -x10 -j10 InputURL
+
+a8 # aria2c --max-overall-download-limit=300k -s10 -x10 -j10 InputURL
+
+a9 # aria2c --load-cookies=InputFile InputURL
+
+a10 # aria2c -i InputFile # txt
+
+a11 # aria2c InputFile # torrent
+
+a12 # aria2c -d OutputDir InputFile # torrent
+
+a13 # aria2c --follow-torrent=mem InputURL # torrent
+
+a14 # aria2c --follow-metalink=mem InputURL # metalink
+
+a15 # aria2c -p --lowest-speed-limit=4000 InputFile # metalink
+
