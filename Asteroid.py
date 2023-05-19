@@ -57,10 +57,12 @@ class Asteroid:
 		self.inputEntry.bind("<Control-m>", self.localEventHandler)
 		self.inputEntry.bind("<Control-BackSpace>", self.localEventHandler)
 		self.inputEntry.bind("<Return>", lambda event:self.submit(event,self.inputEntry.get()))
-		self.q = Queue()
-		self.config = core.loadDict("config.txt")
-		self.commandList = core.loadDict("command.txt")
+		
 		self.loadShortcut()
+		self.commandList = core.loadDict("command.txt")
+		self.config = core.loadDict("config.txt")
+		self.q = Queue()
+
 
 ######################################### 界面操作 ###########################################
 

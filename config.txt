@@ -1,6 +1,5 @@
 <autoload>
 core
-self
 search
 tool
 

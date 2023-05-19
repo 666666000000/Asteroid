@@ -27,6 +27,17 @@ def resolve(line,isReturn):
 	arg,argLen = core.getArgList(line)
 	return functions[arg[0]](arg,argLen,isReturn)
 
+
+#! self !#
+def openSelf(arg,argLen,isReturn):
+	if argLen == 1:
+		core.runCommand(f"start \"\" \"{core.selfPath}\"")
+	else:
+		for m in main.moduleList:
+			if m.find(arg[1]) != -1:
+				core.runCommand(f"start \"\" \"{core.selfPath}\\module\\{m}\"")
+				return
+
 #! < > !#
 def openCmd(arg,argLen,isReturn):
 	global cmd
