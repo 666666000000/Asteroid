@@ -297,7 +297,7 @@ def ff(arg,argLen,isReturn):
 		else:
 			main.setEntry(f"参数错误:{arg[3]}")
 			return
-	io = getIO(presets[arg[1]],inputs,arg[start:])
+	io = getIO(presets[arg[1]] + " ",inputs,arg[start:])
 	if not io: 
 		return
 	getCommand(arg[0],inputs,loopInputs,presets[arg[1]],io,presets["parallel"])
