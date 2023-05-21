@@ -306,7 +306,7 @@ def appendNum(arg,argLen,isReturn):
 	p = ["*",1,"、",1]
 	for i in range(min(len(arg[1:]),len(p))):
 		p[i] = arg[1+i]
-	src = core.getInputPath(arg[1])
+	src = core.getInputPath(p[0])
 	if not src:
 		return
 	start = int(p[1])
@@ -383,20 +383,25 @@ def execCode(arg,argLen,isReturn):
 	print(c)
 	exec(c)
 
-#! gj cq !#	
+#! gj cq xm!#	
 def shutdown(arg,argLen,isReturn):
-	waitTime = 0
-	m = "s" if arg[0] == "gj" else "r"
-	if argLen == 2:
-		if arg[1]=="a":
-			core.runCommand(f"start cmd /c \"shutdown /a\"")
-			return
-		else:
-			waitTime = core.getSeconds(arg[1])
-			if waitTime == -1:
+	if arg[0] == "xm":
+		c = "start cmd /c \"shutdown -h\""
+	else:
+		waitTime = 0
+		m = "s" if arg[0] == "gj" else "r"
+		if argLen == 2:
+			if arg[1]=="a":
+				core.runCommand("start cmd /c \"shutdown /a\"")
 				return
+			else:
+				waitTime = core.getSeconds(arg[1])
+				if waitTime == -1:
+					return
+		c = f"start cmd /c \"shutdown /{m} /t {waitTime}\""
 	main.quit()
-	core.runCommand(f"start cmd /c \"shutdown /{m} /t {waitTime}\"")
+	core.runCommand(c)
+
 
 
 

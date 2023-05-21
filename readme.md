@@ -76,7 +76,6 @@ zerorpc</br>
 ### 全局快捷键
 
 `alt+c` 复制所选内容并召出输入框</br>
-`alt+v` 截屏</br>
 `alt+b` 复制当前文件夹路径（等于 `alt+d`和`ctrl+c`的组合）</br>
 `alt+n` 复制所选文件路径（等于 `alt+3`，`alt+3` 这个快捷键需要将`复制路径`添加到`快速访问工具栏`,win11可以使用ctrl+shift+c ）</br>
 `alt+space` 召出输入框</br>

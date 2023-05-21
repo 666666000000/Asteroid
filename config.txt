@@ -3,6 +3,9 @@ core
 search
 tool
 
+<autorun>
+command : ls
+
 <a>
 ssh
 saveAs
@@ -22,5 +25,5 @@ extract
 preview
 download
 
-<autorun>
+
 
