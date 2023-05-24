@@ -134,11 +134,14 @@ def printDict(arg,argLen):
 	p = ["","t"]
 	for i in range(min(len(arg[1:]),len(p))):
 		p[i] = arg[i+1]
+	if p[0] == "f":
+		p[0] = ""
+		p[1] = "f"
 	if not p[0]:
-		[ printList(key,value) for key,value in pathDict.items() ]	
+		[ printList(key,value,p[1]) for key,value in pathDict.items() ]	
 	else:
 		k = p[0]
-		if k in {"s","d","t","dp","web","search","tmp"}:
+		if k in {"s","d","t","dp","tmp"}:
 			if k == "s":
 				printList("s",selectedSrc,p[1])
 			elif k == "d":
@@ -181,48 +184,40 @@ def clearPath(arg,argLen):
 #! dp !#
 def setDownloadPath(arg,argLen):
 	global downloadPath
-	isOpen = False
-	if argLen == 1:
-		path = getOutputDirPath("*",None,None,"first","checkDir","dir")
-	elif argLen == 2:
-		if arg[1] == "o":
-			path = getOutputDirPath("*",None,None,"first","checkDir","dir")
-			isOpen = True
-		else:
-			path = getOutputDirPath(arg[1],None,None,"first","checkDir","dir")
-	else:
-		path = getOutputDirPath(arg[1],None,None,"first","checkDir","dir")
-		isOpen = True
+	p = ["*",""]
+	for i in range(min(len(arg[1:]),len(p))):
+		p[i] = arg[i+1]
+	path = getOutputDirPath(p[0],None,None,"first","checkDir","dir")
 	if path:
 		downloadPath = path
 		print("下载路径:",path)
-		if isOpen:
+		if p[1] == "o":
 			runCommand(f"start \"\" \"{path}\"")
 
 #! / !#
 def openPath(arg,argLen):
 	global pathDict
-	if argLen == 1:
-		arg.append("*")
-		argLen = 2
-	if arg[1] == "r":
+	p = ["*",""]
+	for i in range(min(len(arg[1:]),len(p))):
+		p[i] = arg[i+1]
+	if p[0] == "r":
 		pathDict = loadDict("module\\core\\path.txt")
 		return True
-	path = getInputPath(arg[1])
+	path = getInputPath(p[0])
 	if path:
-		if argLen == 2:
+		if not p[1]:
 			target = "start \"\""
-		elif argLen >= 3:
-			if arg[2] == "od":
+		else:
+			if p[1] == "od":
 				openDirPath(path)
 				return True
 			else:
-				if arg[2] in programDict:
-					target = f"\"{programDict[arg[2]][0]}\""
+				if p[1] in programDict:
+					target = f"\"{programDict[p[1]][0]}\""
 				else:
-					print("路径未配置:",arg[2])
+					print("路径未配置:",p[1])
 					return False
-		[ runCommand(f"{target} \"{p}\"",True) for p in path ]
+		[ runCommand(f"{target} \"{t}\"",True) for t in path ]
 		return True
 
 def openDirPath(path):
@@ -350,9 +345,7 @@ def getPathByIndex(key):
 		if tmp[0] in pathDict:
 			tmpPath = pathDict[tmp[0]]
 			outPath = ""
-			if tmp[1] == "0":
-				outPath = tmpPath
-			elif tmp[1] == "p":
+			if tmp[1] == "p":
 				outPath = [ os.path.dirname(tmpPath[0]) ]
 			elif (tmp[1].startswith("-") and tmp[1][1:].isnumeric()) or tmp[1].isnumeric():
 				index = checkIndex(int(tmp[1]),len(tmpPath))
@@ -549,8 +542,7 @@ def loadDict(path):
 					val = line.strip()
 					if val:
 						dic[key].append(val)
-			file.close()
-					
+			file.close()			
 	except:
 		print(f"读取 {path} 错误")
 	return dic
