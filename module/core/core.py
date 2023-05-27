@@ -212,7 +212,7 @@ def openPath(arg,argLen):
 				openDirPath(path)
 				return True
 			else:
-				if p[1] in programDict:
+				if p[1] in programDict and programDict[p[1]]:
 					target = f"\"{programDict[p[1]][0]}\""
 				else:
 					print("路径未配置:",p[1])
@@ -236,7 +236,8 @@ def openProgram(arg,argLen):
 		return
 	if arg[1] == "r":
 		programDict = loadDict("module\\core\\program.txt")
-	elif arg[1] not in programDict:
+	elif arg[1] not in programDict or not programDict[arg[1]]:
+		print("软件未配置:",arg[1])
 		return
 	elif argLen == 2:
 		[ runCommand(f"\"{path}\"",True) for path in programDict[arg[1]] ]
