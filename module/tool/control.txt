@@ -181,3 +181,10 @@ control.exe /name Microsoft.NetworkAndSharingCenter
 文件夹属性
 control.exe /name Microsoft.Folderoptions
 
+<2g>
+2.4G WIFI
+netsh wlan connect name="TP-LINK"
+
+<5g>
+2.4G WIFI
+netsh wlan connect name="TP-LINK_5G"

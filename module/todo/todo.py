@@ -53,7 +53,6 @@ def resolve(line,isReturn):
 			closewindow()
 	elif p[0] == "s":
 		core.saveFile(todoList,'module\\todo\\todo.txt',False,"dict")
-		#core.saveDict("module\\todo\\todo.txt",todoList)
 	elif p[0] in todoList:
 		if p[1] == "c":
 			todoList[p[0]].clear()
@@ -91,10 +90,7 @@ def resolve(line,isReturn):
 			todoList["default"].append(" ".join(arg[1:]))
 		if currentName == "default":
 			addTodo()
-		
-
-
-		
+				
 def closewindow(event = None,isClose = "hide"):
 	global window,hide,currentName
 	currentName = ""
@@ -108,7 +104,6 @@ def closewindow(event = None,isClose = "hide"):
 		window.withdraw()
 		hide = True
 	
-
 def eventHandler(event):
 	i = int(event.widget["text"].split(":",1)[0]) - 1
 	if event.num == 1:
@@ -122,8 +117,6 @@ def eventHandler(event):
 		del todoList[currentName][i]
 		delTodo()
 
-
-
 def addTodo():
 	global start,end,todoLen
 	todoLen = len(todoList[currentName])
@@ -136,7 +129,6 @@ def addTodo():
 		end = start + maxRow
 	resizeWindow()
 		
-
 def delTodo():
 	global start,end,todoLen
 	todoLen = len(todoList[currentName])
@@ -152,8 +144,6 @@ def delTodo():
 		else:
 			end = start + maxRow
 	resizeWindow()
-
-
 
 def showTodoList(name):
 	global window, hide, infoLabel,currentName,start
@@ -200,7 +190,6 @@ def turnPage(event):
 			main.setEntry("已到最后一页")
 			return
 	resizeWindow()
-
 
 def resizeWindow():
 	showLen = end - start
