@@ -6,7 +6,7 @@ import random
 import string
 from ..core import core
 
-describe = "运行cmd、powershell命令，进制转换，base64编码解码，快捷打开网址，快捷搜索，快捷打开系统设置，生成随机字符串，截取字符串，提取字符串的某一列，加行号，生成请求头，提取html文本，转大小写，执行python代码片段，关机，重启"
+describe = "运行cmd、powershell命令，进制转换，base64编码解码，快捷打开网址，快捷搜索，快捷打开系统设置，生成随机字符串，截取字符串，提取字符串的某一列，加行号，生成请求头，提取html文本，转大小写，执行python代码片段，关机，重启，休眠"
 
 main = ""
 control = ""
@@ -397,7 +397,7 @@ def execCode(arg,argLen,isReturn):
 	print(c)
 	exec(c)
 
-#! gj cq xm!#	
+#! gj cq xm !#	
 def shutdown(arg,argLen,isReturn):
 	if arg[0] == "xm":
 		c = "start cmd /c \"shutdown -h\""
