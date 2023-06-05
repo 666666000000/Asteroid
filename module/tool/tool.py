@@ -153,12 +153,12 @@ def b64(arg,argLen,isReturn):
 		core.appedClipboardText(data)
 
 def startFirst(dic,start = 0,arg = None):
-	for val in dic.values():
-		if arg:
-			[ core.runCommand(f"start {v}".format(query=arg)) for v in val ]
-		else:
-			[ core.runCommand(f"start {v}") for v in val[start:] ]
-		return
+	key = next(iter(dic))
+	if arg:
+		[ core.runCommand(f"start {v}".format(query=arg)) for v in dic[key] ]
+	else:
+		[ core.runCommand(f"start {v}") for v in dic[key][start:] ]
+
 
 def getURL(arg,dic):
 	if arg == "*":
@@ -207,21 +207,35 @@ def quickStart(arg,argLen,isReturn):
 			[ core.runCommand(f"\"{core.programDict[arg[1]][0]}\" {w}") for w in getURL(arg[2],url) ]
 			
 	elif arg[0] == "￥" or arg[0] == "$":
-		if not core.checkArgLength(arg,2):
-			return
-		if argLen == 2:
-			if arg[1] in search:
-				[ core.runCommand(f"start {s}".format(query = core.getClipboard("strip").replace(" ", "%20"))) for s in search[arg[1]] ]
+		p = ["","",""]
+		for i in range(min(len(arg[1:]),len(p))):
+			p[i] = arg[1+i]
+		if p[0] in core.programDict:
+			if p[1] in search:
+				engine = search[p[1]]
+				if p[2]:
+					text = " ".join(arg[3:]).replace(" ", "%20")
+				else:
+					text = core.getClipboard("strip").replace(" ", "%20")
 			else:
-				startFirst(search,arg = core.getClipboard("strip").replace(" ", "%20") if arg[1] == "*" else arg[1])
+				engine = search[next(iter(search))]
+				if p[1]:
+					text = " ".join(arg[2:]).replace(" ", "%20")
+				else:
+					text = core.getClipboard("strip").replace(" ", "%20")
+			[ core.runCommand(f"\"{core.programDict[p[0]][0]}\" {s}".format(query = text )) for s in engine ]
 		else:
-			if arg[1] in core.programDict and arg[2] in search and argLen >= 4:
-				[ core.runCommand(f"\"{core.programDict[arg[1]][0]}\" {s}".format(query = core.getClipboard("strip").replace(" ", "%20") if arg[3] == "*" else " ".join(arg[3:]).replace(" ", "%20") )) for s in search[arg[2]] ]
-			elif arg[1] in search:
-				[ core.runCommand(f"start {s}".format(query = core.getClipboard("strip").replace(" ", "%20") if arg[2] == "*" else " ".join(arg[2:]).replace(" ", "%20") )) for s in search[arg[1]] ]
+			if p[0] in search:
+				engine = search[p[0]]
+				if p[1]:
+					text = " ".join(arg[2:]).replace(" ", "%20")
+				else:
+					text = core.getClipboard("strip").replace(" ", "%20")
 			else:
-				startFirst(search,arg = " ".join(arg[1:]).replace(" ", "%20"))
-		
+				engine = search[next(iter(search))]
+				text = " ".join(arg[1:]).replace(" ", "%20")
+			[ core.runCommand(f"start {s}".format(query = text )) for s in engine ]
+			
 	elif arg[1] in control:
 		for c in control[arg[1]][1:]:
 			core.runCommand(c)

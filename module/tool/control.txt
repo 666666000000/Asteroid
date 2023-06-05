@@ -186,5 +186,5 @@ control.exe /name Microsoft.Folderoptions
 netsh wlan connect name="TP-LINK"
 
 <5g>
-2.4G WIFI
+5G WIFI
 netsh wlan connect name="TP-LINK_5G"

@@ -52,7 +52,7 @@ def encodeToFile(codeType,src,dst,arg,argLen):
 			p = [1,1,1,-1]
 			for i in range(min(len(arg[4:]),len(p))):
 				p[i] = int(arg[4+i])
-			readXLSX(codeType,s,dst,,p[0],p[1],p[2],p[3])
+			readXLSX(codeType,s,dst,p[0],p[1],p[2],p[3])
 
 def readTXT(codeType,path,dst):
 	with open(path, 'r',encoding = 'utf-8', errors = 'ignore') as file:
