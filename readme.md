@@ -46,6 +46,10 @@ ext, rem, ret</br>
 ff, fft, fu, sc, mv</br>
 调用ffmpeg批量操作视频</br>
 
+`history:`</br>
+saveh, clearh, loadh</br>
+保存、加载、清空命令历史</br>
+
 `log:`</br>
 log</br>
 写文件</br>
@@ -78,9 +82,6 @@ ps, pc, gs</br>
 cp, ms, nd, nf, enc, dec, zip, uzip, r1, s1, s2, s3, s5, m5, rn</br>
 复制文件，镜像同步文件夹，新建文件或文件夹，加密解密文件，压缩解压缩文件，计算文件Hash，批量重命名</br>
 
-`processHistory:`</br>
-saveh, clearh, loadh</br>
-保存、加载、清空命令历史</br>
 
 `qr:`</br>
 qr</br>
