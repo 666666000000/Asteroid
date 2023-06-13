@@ -652,7 +652,7 @@ def getFileType(path):
 		return "dir"
 	elif path.endswith(('bmp','gif','ico','jfif','jpe','jpeg','jpg','png','tif','tiff','webp')):
 		return "image"
-	elif path.endswith(('.aac','.ac3','.amr','.ape','.flac','.m4r','.mmf','.mp3','.ogg','.wma','.wav')):
+	elif path.endswith(('.aac','.ac3','.amr','.ape','.dts','.flac','.m4r','.mmf','.mp3','.ogg','.wma','.wav')):
 		return "audio"
 	elif path.endswith(('.3gp','.avi','.flv','.h264','.mkv','.mov','.mp4','.mpeg','.mpg','.swf','.ts','.webm','.wmv','.yuv')):
 		return "video"
