@@ -49,12 +49,11 @@ def init(arg):
 					custom[val[0]] = tmp
 
 def resolve(line,isReturn):
-	if line.startswith("cal"):
+	if main.currentMode != mode:
 		line = line[3:].lstrip()
-	if not line:
-		if main.currentMode != mode:
+		if not line:
 			main.resetMode(mode)
-		return
+			return
 	if line == "on":		
 		showWindow()
 	elif line == "h":		
