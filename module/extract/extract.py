@@ -47,9 +47,12 @@ def resolve(line,isReturn):
 				else:
 					print(f"参数错误:{t}")
 		else:
-			if p[1] not in pattern:
+			if p[1] == "ori":
+				result.append(data)
+			elif p[1] not in pattern:
 				return main.setEntry(f"参数错误:{p[1]}")
-			result.extend(re.findall(pattern[p[1]],data,re.DOTALL))
+			else:
+				result.extend(re.findall(pattern[p[1]],data,re.DOTALL))
 
 		if not result:
 			return main.setEntry(f"未提取到元素")

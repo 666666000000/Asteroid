@@ -4,6 +4,7 @@ import re
 import time
 import shlex
 import traceback
+import win32clipboard
 
 describe = "操作常用路径及临时路径"
 
@@ -292,7 +293,10 @@ def printList(key,val,showNum = "t"):
 
 def getClipboard(t = "path"):
 	try:
-		data = main.window.clipboard_get()
+		win32clipboard.OpenClipboard()
+		data = win32clipboard.GetClipboardData()
+		win32clipboard.CloseClipboard()
+		#data = main.window.clipboard_get()
 	except:
 		print("读取剪贴板错误")
 		getError()
