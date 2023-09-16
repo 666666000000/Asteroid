@@ -296,7 +296,6 @@ def getClipboard(t = "path"):
 		win32clipboard.OpenClipboard()
 		data = win32clipboard.GetClipboardData()
 		win32clipboard.CloseClipboard()
-		#data = main.window.clipboard_get()
 	except:
 		print("读取剪贴板错误")
 		getError()

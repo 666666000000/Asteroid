@@ -53,7 +53,7 @@ def mirrorSync(arg,argLen,isReturn):
 		return
 	core.printList("源路径",src)
 	core.printList("目标路径",outDir)
-	[ core.runCommand(f"robocopy \"{src[i]}\" \"{outDir[i]}\" /MIR /DCOPY:T /COPY:DAT /A-:SH /V /XD \"System Volume Information\" $RECYCLE.BIN /R:3 /W:3") for i in range( min(len(src),len(outDir)) ) ]
+	[ core.runCommand(f"start cmd /c \"robocopy \"{src[i]}\" \"{outDir[i]}\" /MIR /DCOPY:T /COPY:DAT /A-:SH /V /XD \"System Volume Information\" $RECYCLE.BIN /R:3 /W:3\"") for i in range( min(len(src),len(outDir)) ) ]
 
 #! nf nd !#
 def create(arg,argLen,isReturn):
