@@ -93,6 +93,11 @@ regedit.exe
 services.msc	
 
 
+<dnsx>
+电脑属性
+control system
+
+
 <xtsx>
 系统属性
 rundll32.exe shell32.dll,Control_RunDLL sysdm.cpl,,1
@@ -181,10 +186,10 @@ control.exe /name Microsoft.NetworkAndSharingCenter
 文件夹属性
 control.exe /name Microsoft.Folderoptions
 
-<2g>
+<2.4g>
 2.4G WIFI
-netsh wlan connect name="TP-LINK"
+netsh wlan connect name="TP-LINK2104"
 
 <5g>
 5G WIFI
-netsh wlan connect name="TP-LINK_5G"
+netsh wlan connect name="TP-LINK_5G_2104"
