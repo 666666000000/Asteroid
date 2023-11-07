@@ -397,23 +397,26 @@ def execCode(arg,argLen,isReturn):
 	print(c)
 	exec(c)
 
-#! gj cq xm !#	
+#! gj cq sm xm !#	
 def shutdown(arg,argLen,isReturn):
 	if arg[0] == "xm":
-		c = "start cmd /c \"shutdown -h\""
+		c = "shutdown -h"
+	elif arg[0] == "sm":
+		c = "rundll32.exe powrprof.dll,SetSuspendState 0,1,0"
 	else:
 		waitTime = 0
 		m = "s" if arg[0] == "gj" else "r"
 		if argLen == 2:
 			if arg[1]=="a":
-				core.runCommand("start cmd /c \"shutdown /a\"")
+				core.runCommand("shutdown /a")
 				return
 			else:
 				waitTime = core.getSeconds(arg[1])
 				if waitTime == -1:
 					return
-		c = f"start cmd /c \"shutdown /{m} /t {waitTime}\""
-	main.quit()
+		c = f"shutdown /{m} /t {waitTime}"
+	if arg[0] != "sm":
+		main.quit()
 	core.runCommand(c)
 
 
