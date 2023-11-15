@@ -83,7 +83,7 @@ osk
 rundll32.exe shell32.dll,Control_RunDLL powercfg.cpl	
 
 
-<zzb>
+<zcb>
 注册表
 regedit.exe	
 
@@ -131,6 +131,11 @@ wf.msc
 <tjdyj>
 添加打印机
 rundll32.exe shell32.dll,SHHelpShortcuts_RunDLL AddPrinter
+
+
+<tjsb>
+添加设备
+hdwwiz.cpl
 
 
 <hsz>
@@ -186,10 +191,35 @@ control.exe /name Microsoft.NetworkAndSharingCenter
 文件夹属性
 control.exe /name Microsoft.Folderoptions
 
+
+<yhhz>
+本地用户和组
+lusmgr.msc
+
+<kzt>
+控制台
+mmc
+
+<odbc>
+ODBC数据源管理器
+odbcad32
+
+
+<inetcpl.cpl>
+Internet属性
+inte
+
+
+<jt>
+截图
+snippingtool
+
+
 <2.4g>
 2.4G WIFI
-netsh wlan connect name="TP-LINK2104"
+netsh wlan connect name="TP-LINK"
+
 
 <5g>
 5G WIFI
-netsh wlan connect name="TP-LINK_5G_2104"
+netsh wlan connect name="TP-LINK_5G"
