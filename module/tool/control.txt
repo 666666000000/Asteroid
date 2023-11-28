@@ -205,9 +205,14 @@ ODBC数据源管理器
 odbcad32
 
 
-<inetcpl.cpl>
+<inte>
 Internet属性
-inte
+inetcpl.cpl
+
+
+<jhrw>
+计划任务
+taskschd.msc
 
 
 <jt>
