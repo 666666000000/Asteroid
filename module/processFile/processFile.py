@@ -134,15 +134,15 @@ def encrypt(arg,argLen,isReturn):
 #! m5 s1 s2 s3 s5 r1 !#
 def hashFile(arg,argLen,isReturn):
 	command = ""
-	if arg == "m5":
+	if arg[0] == "m5":
 		alg = "md5"
-	elif arg == "s1":
+	elif arg[0] == "s1":
 		alg = "sha1"
-	elif arg == "s2":
+	elif arg[0] == "s2":
 		alg = "sha256"
-	elif arg == "s3":
+	elif arg[0] == "s3":
 		alg = "sha384"
-	elif arg == "s5":
+	elif arg[0] == "s5":
 		alg = "sha512"
 	else :
 		alg = "ripemd160"

@@ -97,7 +97,8 @@ def appendDict(name,dic,mode,value = None,checkRepeat = True,printVal = True):
 		if not value:
 			return
 	if mode == "ad" or name not in dic:
-		dic[name] = [] + value
+		dic[name] = []
+		dic[name].extend(value)
 	else:
 		if checkRepeat:
 			[ dic[name].append(v) for v in value if v not in dic[name] ]

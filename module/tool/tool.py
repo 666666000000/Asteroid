@@ -391,6 +391,18 @@ def upperLower(arg,argLen,isReturn):
 	else:
 		core.appedClipboardText(data)
 
+
+#! ping !#
+def ping(arg,argLen,isReturn):
+	ip = core.getClipboard() if argLen == 1 else core.getInputPath(arg[1])
+	if not ip:
+		return
+	command = ""
+	for i in ip:
+		command += f"ping {i} & "
+	core.runCommand(f"start cmd /k \"{command}\"")
+
+
 #! exec !#
 def execCode(arg,argLen,isReturn):
 	c = core.getClipboard("ori")

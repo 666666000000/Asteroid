@@ -219,6 +219,10 @@ taskschd.msc
 截图
 snippingtool
 
+<hjbl>
+环境变量
+rundll32 sysdm.cpl,EditEnvironmentVariables
+
 
 <2.4g>
 2.4G WIFI

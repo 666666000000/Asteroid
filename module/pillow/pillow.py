@@ -23,7 +23,6 @@ def resizeImg(arg,argLen,isReturn):
 	outDir = core.getOutputDirPath(arg[2],src[0],"file","first")
 	if not outDir:
 		return
-	width = height = 0
 	scale = -1
 	if arg[3].find("*") == -1:
 		scale = float(arg[3])
@@ -41,14 +40,16 @@ def resizeImg(arg,argLen,isReturn):
 		img = Image.open(s)
 		(w, h) = img.size
 		if scale != -1:
-			width = int(w*scale)
-			height = int(h*scale)
+			dwidth = int(w*scale)
+			dheight = int(h*scale)
 		else:
 			if width == -1 and height != -1:
-				width = floor(w*height/h)
+				dwidth = floor(w*height/h)
+				dheight = height
 			elif width != -1 and height == -1:
-				height = floor(h*width/w)
-		out = img.resize((width, height), Image.ANTIALIAS)
+				dwidth = width
+				dheight = floor(h*width/w)
+		out = img.resize((dwidth, dheight), Image.ANTIALIAS)
 		dstPath = core.getOutputFilePath(outDir,s,"checkDir","file")
 		out.save(dstPath,quality = 95)
 		if isReturn:
@@ -85,7 +86,13 @@ def rotateGrayBlur(arg,argLen,isReturn):
 			dst.append(dstPath)
 	return dst
 
+
 #剪裁图片
+# l 1920 t 1080
+# l120 1920 t80 1080
+# l0.3 1920 
+# l120 t80 1080
+
 #! crop !#
 def cropImg(arg,argLen,isReturn):
 	if not core.checkArgLength(arg,4):
@@ -96,17 +103,15 @@ def cropImg(arg,argLen,isReturn):
 	outDir = core.getOutputDirPath(arg[2],src[0],"file","first")
 	if not outDir:
 		return
-	p = [0,0,0,0]
+	p = ["0","0","0","0"]
 	for i in range(min(len(arg[3:]),len(p))):
-		p[i] = int(arg[3+i])
-	left = p[0]
-	top = p[1]
-	right = p[2]
-	bottom = p[3]
-	src = core.getFilePathFromClipboard()
-	if not src: 
-		print("源路径错误")
-		return
+		p[i] = arg[3+i]
+	
+	if p[0].isnumeric():
+		left = int(p[0])
+		top = int(p[1])
+		right = int(p[2])
+		bottom = int(p[3])
 	dst = list()
 	for s in src:
 		if core.getFileType(s) != "image":
@@ -114,10 +119,113 @@ def cropImg(arg,argLen,isReturn):
 		img = Image.open(s)
 		width = img.width
 		height = img.height
-		if (left+right) > width or (top+bottom) > height :
-			print("剪裁尺寸错误")
-			continue
-		out = img.crop([ left,top,width - right,height - bottom ])
+		if p[0].isnumeric():
+			if (left + right) > width or (top + bottom) > height :
+				print("剪裁尺寸错误")
+				continue
+			out = img.crop([ left, top, width - right, height - bottom ])
+		else:
+			i = 0
+			x1 = y1 = 0
+			x2 , y2 = width , height
+			while i < 4:
+				if p[i] == "0":
+					print("break")
+					break
+				if p[i] in {"l","t","r","b"}:
+					# l 1920 t 1080
+					if not p[i+1].isnumeric():
+						print("参数错误:",p[i+1])
+						return
+					if p[i] == "l":
+						x1 = width - int(p[i+1])
+						x2 = width
+					elif p[i] == "t":
+						y1 = height - int(p[i+1])
+						y2 = height
+					elif p[i] == "r":
+						x1 = 0
+						x2 = int(p[i+1])
+					elif p[i] == "b":
+						y1 = 0
+						y2 = int(p[i+1])
+					i += 2
+				elif p[i].startswith(("l","t","r","b")):
+					if p[i][1:].isnumeric():
+						tmp = int(p[i][1:])
+						isint = True
+					else:
+						tmp = float(p[i][1:])
+						isint = False
+					if i <= 2 and p[i+1].isnumeric() and p[i+1] != "0":
+						if p[i][0] == "l":
+							# l120 1920 
+							if isint:
+								x1 = tmp
+							# l0.3 1920 
+							else:
+								x1 = floor((width - int(p[i+1])) * tmp)
+							x2 = x1 + int(p[i+1])
+						elif p[i][0] == "t":
+							# t120 1080
+							if isint:
+								y1 = tmp
+							# t0.3 1080
+							else:
+								y1 = floor((height - int(p[i+1])) * tmp)
+							y2 = y1 + int(p[i+1])
+						
+						elif p[i][0] == "r":
+							# r120 1920 
+							if isint:
+								x2 = width - tmp
+								x1 = x2 - int(p[i+1])
+							# r0.3 1920 
+							else:
+								x2 = width - floor( (width - int(p[i+1])) * tmp )
+								x1 = x2 - int(p[i+1])
+						elif p[i][0] == "b":
+							# b120 1080
+							if isint:
+								y2 = height - tmp
+								y1 = y2 - int(p[i+1])
+							# b0.3 1080
+							else:
+								y2 = height - floor( (height - int(p[i+1])) * tmp )
+								y1 = y2 - int(p[i+1])	
+						i += 2
+					else:
+						if p[i][0] == "l":
+							# l120
+							if isint:
+								x1 = tmp
+							# l0.3
+							else:
+								x1 = floor(width * tmp)
+						elif p[i][0] == "t":
+							# t120
+							if isint:
+								y1 = tmp
+							# t0.3
+							else:
+								y1 = floor(height * tmp)
+						elif p[i][0] == "r":
+							# r120
+							if isint:
+								x2 = width - tmp
+							# r0.3
+							else:
+								x2 = width - floor(width * tmp)	
+						elif p[i][0] == "b":
+							# b120
+							if isint:
+								y2 = height - tmp
+							# b0.3
+							else:
+								y2 = height - floor(height * tmp)
+						i += 1
+			print(x1,x2,y1,y2)
+			out = img.crop([ x1, y1, x2, y2 ])
 		dstPath = core.getOutputFilePath(outDir,s,"checkDir","file")
 		out.save(dstPath,quality = 95)
 		if isReturn:
