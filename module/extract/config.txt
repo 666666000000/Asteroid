@@ -1,5 +1,0 @@
-li # <li.*?</li>
-a # <a.*?</a>
-t # title=\".*?\"
-h # href=\".*?\"
-d # <div.*?</div>

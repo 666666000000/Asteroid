@@ -3,7 +3,7 @@ import re
 from ..core import core
 
 commands = {"ext","rem","ret"}
-describe = "提取html元素"
+describe = "提取元素"
 result = list()
 pattern = ""
 last = ""
@@ -12,48 +12,63 @@ main = ""
 def init(arg):
 	global main,pattern
 	main = arg
-	pattern = core.loadCommand("module\\extract\\config.txt")
+	pattern = core.loadCommand("module\\extract\\pattern.txt")
 
 
 def resolve(line,isReturn):
 	global result,last,pattern
 	arg,argLen = core.getArgList(line)
-	p = ["","","0"]
+	repeat = False
+	append = False
+	src = "*"
+	p = ["","","0","0","0"]
 	for i in range(min(len(arg),len(p))):
 		p[i] = arg[i]
 	if p[0] == "ext":
 		if not core.checkArgLength(arg,2):
 			return
 		if p[1] == "r":
-			pattern = core.loadCommand("module\\extract\\config.txt")
+			pattern = core.loadCommand("module\\extract\\pattern.txt")
 			return
 		if p[1] == "<l>":
 			p[1] = last
 		
 		if last != p[1]:
 			last = p[1]
-
-		data = core.getClipboard("strip")
+		for i in range(2,5):
+			if p[i] == "r":
+				repeat = True
+			elif p[i] == "a":
+				append = True
+			elif p[i] != "0":
+				src = p[i]
+		if src == "*":
+			data = core.getClipboard("strip")
+		else:
+			data = core.getInputPath(src)
 		if not data:
-			return main.setEntry("剪贴板无数据")
-
-		if p[2] == "0":
+			return main.setEntry("无数据")
+		if isinstance(data,list):
+			data = "".join(data)
+		if not append:
 			result.clear()
 
 		if p[1].find("+") != -1:
 			for t in p[1].split("+"):
 				if t in pattern:
-					result.extend(re.findall(pattern[t],data,re.DOTALL))
+					addData(result,re.findall(pattern[t],data,re.DOTALL),repeat)
 				else:
 					print(f"参数错误:{t}")
 		else:
 			if p[1] == "ori":
-				result.append(data)
+				if repeat:
+					result.append(data)
+				elif data not in result:
+					result.append(data)
 			elif p[1] not in pattern:
 				return main.setEntry(f"参数错误:{p[1]}")
 			else:
-				result.extend(re.findall(pattern[p[1]],data,re.DOTALL))
-
+				addData(result,re.findall(pattern[p[1]],data,re.DOTALL),repeat)
 		if not result:
 			return main.setEntry(f"未提取到元素")
 		print("提取元素:",len(result))
@@ -84,4 +99,12 @@ def resolve(line,isReturn):
 				return result[start-1:end]
 
 
+def addData(ret,data,repeat):
+	if not data:
+		return
+	if repeat:
+		ret.extend(data)
+	else:
+		[ ret.append(d) for d in data if d not in ret ]
+				
 
