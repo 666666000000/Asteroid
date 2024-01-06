@@ -79,7 +79,7 @@ def resolve(line,isReturn):
 		r = core.getClipboard("strip") if not p[1] else p[1]
 		for i in range(len(result)):
 			if result[i].find(r) != -1:
-				print(f"删除第 {i} 个元素:",result[i])
+				print(f"删除第 {i+1} 个元素:",result[i])
 				del result[i]
 				return
 		print("未找到元素")
