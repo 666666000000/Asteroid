@@ -76,7 +76,7 @@ def resolve(line,isReturn):
 			return result
 
 	elif p[0] == "rem":
-		r = core.getClipboard("strip")
+		r = core.getClipboard("strip") if not p[1] else p[1]
 		for i in range(len(result)):
 			if result[i].find(r) != -1:
 				del result[i]

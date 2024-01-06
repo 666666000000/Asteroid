@@ -27,30 +27,34 @@ def init(arg):
 
 def encode(arg,argLen):
 	global dstPath
-	if argLen <= 2 :
-		if argLen == 2:
-			dstPath = core.getOutputDirPath(arg[1],None,None,"first","checkDir","file")
+	p = [0,0]
+	for i in range(min(len(arg[1:]),len(p))):
+		p[i] = arg[1+i]
+	if p[0] == 0:
 		showQR()
-	elif argLen >= 3:
-		if arg[1] == "*":
-			src = core.getClipboard("strip")
-			srcType = "str"
-		elif arg[1] == "**":
-			src = core.getClipboard("list")
-			srcType = "strs"
-		elif arg[1] == "f":
-			src = core.getFilePathFromClipboard()
-			srcType = "file"
-		else:
-			print(f"参数错误:{arg[1]}")
-			return
-		if not src:
-			print(f"源路径无效:{arg[1]}")
-			return
-		outDir = core.getOutputDirPath(arg[2],src[0],"file","first","checkDir","file")
+		return
+	elif p[0] == "*":
+		src = core.getClipboard("strip")
+		srcType = "str"
+	elif p[0] == "**":
+		src = core.getClipboard("list")
+		srcType = "strs"
+	elif p[0] == "f":
+		src = core.getFilePathFromClipboard()
+		srcType = "file"
+	else:
+		if p[1] != 0:
+			dstPath = core.getOutputDirPath(p[1],None,None,"first","checkDir","file")
+		showQR(p[0])
+		return
+	if p[1] == 0:
+		print("缺少保存路径")
+		return
+	else:
+		outDir = core.getOutputDirPath(p[1],src[0],"file","first","checkDir","file")
 		if not outDir:
 			return
-		return encodeToFile(src,srcType,outDir)
+	return encodeToFile(src,srcType,outDir)
 
 def saveImg(event,img):
 	global dstPath
@@ -63,12 +67,12 @@ def saveImg(event,img):
 	img.save(dstPath)
 	dstPath = ""
 
-def showQR():
+def showQR(src = None):
 	global qrImg
 	window = Toplevel()
 	window.overrideredirect(True)
-	window.geometry(f"{width}x{width}+{xPos}+{yPos}")	
-	img = qrcode.make(window.clipboard_get().strip())
+	window.geometry(f"{width}x{width}+{xPos}+{yPos}")
+	img = qrcode.make(src) if src else qrcode.make(window.clipboard_get().strip())
 	resized = img.resize((width,width),Image.ANTIALIAS)
 	qrImg = ImageTk.PhotoImage(resized)
 	imgLabel = Label(window,image = qrImg)
@@ -76,6 +80,7 @@ def showQR():
 	window.bind("<ButtonRelease-3>",lambda event:saveImg(event,img))
 	window.bind("<Double-Button-1>",lambda event:exit(event,window))
 	core.windows.append(window)
+	return True
 
 def encodeToFile(src,srcType,dst):
 	if srcType == "str":
