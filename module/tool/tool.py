@@ -394,13 +394,19 @@ def upperLower(arg,argLen,isReturn):
 
 #! ping !#
 def ping(arg,argLen,isReturn):
-	ip = core.getClipboard() if argLen == 1 else core.getInputPath(arg[1])
+	p = ["*",0]
+	for i in range(min(len(arg[1:]),len(p))):
+		p[i] = arg[1+i]
+	ip = core.getClipboard() if p[0] == "*" else core.getInputPath(p[0])
 	if not ip:
 		return
 	command = ""
-	for i in ip:
-		command += f"ping {i} & "
-	core.runCommand(f"start cmd /k \"{command}\"")
+	if p[1] == "p":
+		[ core.runCommand(f"start cmd /k \"ping {i}\"") for i in ip ]
+	else:
+		for i in ip:
+			command += f"ping {i} & "
+		core.runCommand(f"start cmd /k \"{command}\"")		
 
 
 #! exec !#
