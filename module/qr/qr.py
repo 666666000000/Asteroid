@@ -15,6 +15,7 @@ width = 0
 dstPath = ""
 window = ""
 imgLabel = ""
+
 def resolve(line,isReturn):
 	arg,argLen = core.getArgList(line)
 	return encode(arg,argLen)
@@ -73,7 +74,6 @@ def showQR(src = None):
 	resized = img.resize((width,width),Image.ANTIALIAS)
 	qrImg = ImageTk.PhotoImage(resized)
 	if not window:
-		print("create window")
 		window = Toplevel()
 		window.overrideredirect(True)
 		window.geometry(f"{width}x{width}+{xPos}+{yPos}")

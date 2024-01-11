@@ -15,8 +15,9 @@ describe = "从剪贴板、文本批量生成条码"
 xPos = 0
 yPos = 0
 width = 0
-barImg = ""
 dstPath = ""
+window = ""
+imgLabel = ""
 
 def resolve(line,isReturn):
 	arg,argLen = core.getArgList(line)
@@ -83,22 +84,27 @@ def saveImg(event,img):
 	img.save(dstPath)
 	dstPath = ""
 
-def showBarcode(arg):
-	global barImg
-	img = barCodeImage(arg,core.getClipboard("strip"))
+def showBarcode(arg,src = None):
+	global window,imgLabel
+	img = barCodeImage(arg,src) if src else barCodeImage(arg,core.getClipboard("strip"))
 	if not img:
 		return
-	window = Toplevel(bg = "white")
-	window.overrideredirect(True)
-	window.geometry(f"{width}x{width}+{xPos}+{yPos}")
 	height = floor(width*img.height/img.width)
 	resized = img.resize((width,height),Image.ANTIALIAS)
 	barImg = ImageTk.PhotoImage(resized)
-	ypos = floor(width-height)/2
-	imgLabel = Label(window,image = barImg)
-	imgLabel.place(y = ypos,width = width , height = height)
-	window.bind("<ButtonRelease-3>",lambda event:saveImg(event,img))
-	window.bind("<Double-Button-1>",lambda event:exit(event,window))
+	if not window:
+		window = Toplevel(bg = "white")
+		window.overrideredirect(True)
+		window.geometry(f"{width}x{width}+{xPos}+{yPos}")
+		imgLabel = Label(window)
+		ypos = floor(width-height)/2
+		imgLabel.place(y = ypos,width = width , height = height)
+		window.bind("<ButtonRelease-3>",lambda event:saveImg(event,img))
+		window.bind("<Double-Button-1>",lambda event:exit(event))
+		core.windows.append(window)
+	imgLabel.config(image=barImg)
+	imgLabel.image = barImg
+	return True
 
 def encodeToFile(codeType,src,srcType,dst):
 	if type == "str":
@@ -134,8 +140,10 @@ def encodeStr(codeType,src,name,dst):
 	print(f"保存至 :{dst}")
 	img.save(dst)
 
-def exit(event,window):
+def exit(event):
+	global window
 	window.destroy()
+	window = ""
 
 def checkName(name):
 	rstr = r'[\\/:*?"<>|\r\n]+'

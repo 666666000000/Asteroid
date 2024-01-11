@@ -27,7 +27,6 @@ textBg = ""
 timeText = StringVar()
 msgText = StringVar()
 
-img = ""
 imgLabel = ""
 imgBg = ""
 
@@ -266,7 +265,7 @@ def getPath(arg,type):
 			return f"module\\alarmClock\\{arg}"
 			
 def showWindow(arg):
-	global window,hide,textBg,imgBg,imgLabel,img
+	global window,hide,textBg,imgBg,imgLabel
 	if not window:
 		window = Toplevel()
 		window.attributes("-toolwindow",1)
@@ -310,6 +309,7 @@ def showWindow(arg):
 			i = i.resize((imgWidth,imgWidth),PILImage.ANTIALIAS)
 		img = ImageTk.PhotoImage(i)
 		imgLabel.config(image = img)
+		imgLabel.image = img
 	except:
 		print("读取图片错误")
 
