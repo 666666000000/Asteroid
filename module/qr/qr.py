@@ -12,9 +12,9 @@ describe = "从剪贴板、文本批量生成二维码"
 xPos = 0
 yPos = 0
 width = 0
-qrImg = ""
 dstPath = ""
-
+window = ""
+imgLabel = ""
 def resolve(line,isReturn):
 	arg,argLen = core.getArgList(line)
 	return encode(arg,argLen)
@@ -68,18 +68,22 @@ def saveImg(event,img):
 	dstPath = ""
 
 def showQR(src = None):
-	global qrImg
-	window = Toplevel()
-	window.overrideredirect(True)
-	window.geometry(f"{width}x{width}+{xPos}+{yPos}")
+	global window,imgLabel
 	img = qrcode.make(src) if src else qrcode.make(window.clipboard_get().strip())
 	resized = img.resize((width,width),Image.ANTIALIAS)
 	qrImg = ImageTk.PhotoImage(resized)
-	imgLabel = Label(window,image = qrImg)
-	imgLabel.place(width = width , height = width)
-	window.bind("<ButtonRelease-3>",lambda event:saveImg(event,img))
-	window.bind("<Double-Button-1>",lambda event:exit(event,window))
-	core.windows.append(window)
+	if not window:
+		print("create window")
+		window = Toplevel()
+		window.overrideredirect(True)
+		window.geometry(f"{width}x{width}+{xPos}+{yPos}")
+		imgLabel = Label(window)
+		imgLabel.place(width = width , height = width)
+		window.bind("<ButtonRelease-3>",lambda event:saveImg(event,img))
+		window.bind("<Double-Button-1>",lambda event:exit(event))
+		core.windows.append(window)
+	imgLabel.config(image=qrImg)
+	imgLabel.image = qrImg
 	return True
 
 def encodeToFile(src,srcType,dst):
@@ -114,9 +118,11 @@ def encodeStr(src,name,dst):
 	print(f"保存至 :{dst}")
 	img.save(dst)
 
-def exit(event,window):
+def exit(event):
+	global window
 	core.windows.remove(window)
 	window.destroy()
+	window = ""
 
 def checkName(name):
 	rstr = r'[\\/:*?"<>|\r\n]+'
