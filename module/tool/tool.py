@@ -33,6 +33,9 @@ def openSelf(arg,argLen,isReturn):
 	if argLen == 1:
 		core.runCommand(f"start \"\" \"{core.selfPath}\"")
 	else:
+		if arg[1] in main.moduleList:
+			core.runCommand(f"start \"\" \"{core.selfPath}\\module\\{arg[1]}\"")
+			return
 		for m in main.moduleList:
 			if m.find(arg[1]) != -1:
 				core.runCommand(f"start \"\" \"{core.selfPath}\\module\\{m}\"")
@@ -41,24 +44,48 @@ def openSelf(arg,argLen,isReturn):
 #! < > !#
 def openCmd(arg,argLen,isReturn):
 	global cmd
-	if arg[1] == "r":
+	p = [0,0]
+	for i in range(min(len(arg[1:]),len(p))):
+		p[i] = arg[1+i]
+	if p[0] == 0:
+		return main.setEntry(f"缺少参数")
+	if p[0] == "r":
 		cmd = core.loadCommand("module\\tool\\command.txt")
 		return
-	if not core.checkArgLength(arg,3):
-		return
-	if arg[1] == "\\":
-		dst = None
-	else:
-		dst = core.getOutputDirPath(arg[1],None,None,"list","checkDir","dir")
+	dst = None
+	pos = 0
+	if p[0].startswith("@"):
+		dst = core.getOutputDirPath(p[0][1:],None,None,"list","checkDir","dir")
 		if not dst:
 			return
-	if arg[2] in cmd:
-		command = cmd[arg[2]]+" "
-		command = replaceParm(arg[3:],command)
+		pos = 1
+	if p[pos] == 0:
+		return main.setEntry(f"缺少参数")
+	if p[pos] in cmd:
+		command = cmd[p[pos]]+" "
+		command = replaceParm(arg[pos+2:],command)
 		if not command:
 			return
 	else:
-		command = " ".join(arg[2:])
+		command = " ".join(arg[pos+1:])
+	# if arg[1] == "r":
+		# cmd = core.loadCommand("module\\tool\\command.txt")
+		# return
+	# if not core.checkArgLength(arg,3):
+		# return
+	# if arg[1] == "\\":
+		# dst = None
+	# else:
+		# dst = core.getOutputDirPath(arg[1],None,None,"list","checkDir","dir")
+		# if not dst:
+			# return
+	# if arg[2] in cmd:
+		# command = cmd[arg[2]]+" "
+		# command = replaceParm(arg[3:],command)
+		# if not command:
+			# return
+	# else:
+		# command = " ".join(arg[2:])
 	if dst:
 		for d in dst:
 			if arg[0] == ">":

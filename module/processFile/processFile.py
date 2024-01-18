@@ -174,9 +174,10 @@ def zipFile(arg,argLen,isReturn):
 				if p[1] == "*" :
 					p[2] = "\\*.zip"
 				else:
+					p[3] = p[1]
 					p[1] = "*"
 					p[2] = f"\\{name.rsplit('.',1)[0]}.zip"
-					p[3] = p[1]
+					
 		else:
 			if argLen == 1:
 				p[2] = "\\"
@@ -184,9 +185,9 @@ def zipFile(arg,argLen,isReturn):
 				if p[1] == "*":
 					p[2] = "\\*"
 				else:
+					p[3] = p[1]
 					p[1] = "*"
-					p[2] = "\\"
-					p[3] = p[1]			
+					p[2] = "\\"		
 	if not src:
 		src = core.getInputPath(p[1])
 		if not src:

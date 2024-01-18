@@ -14,7 +14,7 @@ tr # tracert InputArg
 
 nl # nslookup InputArg
 
-server # python -m http.server
+http # python -m http.server
 
 #########################################################  you-get  #########################################################
 
