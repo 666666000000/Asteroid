@@ -1,2 +1,0 @@
-<tcp>
-localhost 8899 123456

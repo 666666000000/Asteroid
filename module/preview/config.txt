@@ -1,3 +1,0 @@
-<shortcut>
-Control-d : view d
-Control-Key-1 : vap pic

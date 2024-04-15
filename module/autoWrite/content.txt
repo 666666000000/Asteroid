@@ -1,7 +1,0 @@
-<a>
-#-*- coding : utf-8 -*-
-
-<b>
-if __name__ == "__main__":
-
-

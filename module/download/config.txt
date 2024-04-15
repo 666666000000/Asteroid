@@ -1,5 +1,0 @@
-<udp>
-localhost 8888 password
-
-<rpc>
-http://localhost:6800/jsonrpc 88888888
